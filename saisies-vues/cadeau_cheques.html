@@ -1,0 +1,20 @@
+<BOUCLE_test_multiple(CONDITION){si #ENV{multiple}|=={on}|oui}>
+	[(#SET{valeur,[(#ENV*{valeur}|is_array|?{[(#ENV*{valeur})],[(#ENV*{valeur}|explode{','})]})]})]
+	<B_cadeau_cheques_selectionnes>
+	<ul>
+	<BOUCLE_cadeau_cheques_selectionnes(CADEAU_CHEQUES){id_cadeau_cheque IN #GET*{valeur}}
+		{par num titre, titre}{statut?}{tout}>
+		<li class="choix">#TITRE (#ID_CADEAU_CHEQUE)</li>
+	</BOUCLE_cadeau_cheques_selectionnes>
+	</ul>
+	</B_cadeau_cheques_selectionnes>
+   	[(#ENV*{sans_reponse}|propre)]
+	<//B_cadeau_cheques_selectionnes>
+</BOUCLE_test_multiple>
+	<BOUCLE_cadeau_cheque_selectionne(CADEAU_CHEQUES){id_cadeau_cheque=#ENV{valeur}}
+		{par num titre, titre}{statut?}{tout}>
+	  	<p>#TITRE (#ID_CADEAU_CHEQUE)</p>
+	</BOUCLE_cadeau_cheque_selectionne>
+   	[(#ENV*{sans_reponse}|propre)]
+	<//B_cadeau_cheque_selectionne>
+<//B_test_multiple>

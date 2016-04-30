@@ -1,0 +1,52 @@
+<paquet
+	prefix="cheques_cadeau"
+	categorie="communication"
+	version="1.0.0"
+	etat="dev"
+	compatibilite="[3.0.22;3.1.*]"
+	logo="prive/themes/spip/images/cheques_cadeau-64.png"
+	documentation=""
+	schema="1.0.0" 
+>
+	<!--
+		Paquet genere le 2016-04-30 12:47:17
+		(Vous pouvez bien entendu supprimer ces commentaires) 
+	-->
+
+	<nom>Chèque cadeau</nom>
+
+	<!-- cette balise peut etre presente plusieurs fois s'il y a plusieurs auteurs --> 
+	<auteur lien='http://websimple.be'>rainer</auteur>
+
+	<licence>GNU/GPL</licence>
+
+	<!--
+		Exemple de commandes
+		* dependances
+		<necessite nom="saisies" compatibilite="[1.21.0;]" />
+		<utilise nom="saisies" compatibilite="[1.21.0;]" />
+		<lib nom="simplehtmldom" lien="http://chemin_vers_archive.zip" />
+		* pipelines
+		<pipeline nom="autoriser" inclure="cheques_cadeau_autorisations.php" />
+		<pipeline nom="insert_head" inclure="cheques_cadeau_pipelines.php" />
+		* declarer un pipeline 
+		<pipeline nom="mon_pipeline" action="" />
+		* parents de menus de SPIP :
+				menu_accueil (A eviter), menu_edition, menu_publication,
+				menu_activite, menu_squelette, menu_administration, menu_configuration 
+		<menu nom="cheques_cadeau" titre="cheques_cadeau:cheques_cadeau_titre" parent="menu_edition"  icone="images/cheques_cadeau-16.png" />
+		* parents d'onglets... configuration, plugins, statistiques, ... 
+		<onglet nom="cheques_cadeau" titre="cheques_cadeau:cheques_cadeau_titre" parent="configuration" icone="images/cheques_cadeau-24.png" />
+	-->
+
+	<necessite nom="saisies"  compatibilite="[1.24.0;]" /> 
+
+
+	<pipeline nom="autoriser" inclure="cheques_cadeau_autorisations.php" /> 
+
+	<pipeline nom="declarer_tables_objets_sql" inclure="base/cheques_cadeau.php" /> 
+	<pipeline nom="declarer_tables_interfaces" inclure="base/cheques_cadeau.php" /> 
+
+	<menu nom="cadeau_cheques" titre="cadeau_cheque:titre_cadeau_cheques" parent="menu_edition" icone="images/cadeau_cheque-16.png" action="cadeau_cheques" /> 
+	<menu nom="cadeau_cheque_creer" titre="cadeau_cheque:icone_creer_cadeau_cheque" parent="outils_rapides" icone="images/cadeau_cheque-new-16.png" action="cadeau_cheque_edit" parametres="new=oui" /> 
+</paquet>

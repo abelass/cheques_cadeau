@@ -1,0 +1,8 @@
+#FORMULAIRE_RECHERCHE_ECRIRE{#SELF,ajax}
+<div class="nettoyeur"></div>
+
+<INCLURE{fond=prive/objets/liste/cadeau_cheques, par=titre, env, ajax, sinon=<:cadeau_cheque:info_aucun_cadeau_cheque:>}>
+
+[(#AUTORISER{creer,cadeau_cheque})
+	[(#URL_ECRIRE{cadeau_cheque_edit,new=oui}|icone_verticale{<:cadeau_cheque:icone_creer_cadeau_cheque:>,cadeau_cheque,new,right})]
+]

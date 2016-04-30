@@ -1,0 +1,46 @@
+[(#AUTORISER{voir,cadeau_cheque,#ID_CADEAU_CHEQUE}|sinon_interdire_acces)]
+<BOUCLE_cadeau_cheque(CADEAU_CHEQUES){id_cadeau_cheque}{statut==.*}{si #ENV{exec}|=={cadeau_cheque}}>
+[(#BOITE_OUVRIR{[
+	[(#AUTORISER{modifier,cadeau_cheque,#ID_CADEAU_CHEQUE})
+		[(#ID_CADEAU_CHEQUE|afficher_qui_edite{cadeau_cheque}|non)
+			[(#URL_ECRIRE{cadeau_cheque_edit,id_cadeau_cheque=#ID_CADEAU_CHEQUE}|icone_verticale{<:cadeau_cheque:icone_modifier_cadeau_cheque:>,cadeau_cheque,edit,right ajax preload})]
+		]
+		[(#ID_CADEAU_CHEQUE|afficher_qui_edite{cadeau_cheque}|oui)
+			[(#URL_ECRIRE{cadeau_cheque_edit,id_cadeau_cheque=#ID_CADEAU_CHEQUE}|icone_verticale{#ID_CADEAU_CHEQUE|afficher_qui_edite{cadeau_cheque},warning-24,'',right edition_deja ajax preload})]
+		]
+	]
+
+	<h1>[(#RANG). ](#TITRE|sinon{<:info_sans_titre:>})[(#CHEMIN_IMAGE{cadeau_cheque-24.png}|balise_img{cadeau_cheque,cadre-icone})]</h1>
+
+],simple fiche_objet})]
+
+<div class="ajax">
+	#FORMULAIRE_DATER{cadeau_cheque,#ID_CADEAU_CHEQUE}
+</div>
+
+<!--affiche_milieu-->
+
+<div id="wysiwyg">
+<INCLURE{fond=prive/objets/contenu/cadeau_cheque,id=#ID_CADEAU_CHEQUE,id_cadeau_cheque=#ID_CADEAU_CHEQUE,virtuel=oui,ajax=wysiwyg,wysiwyg=1}>
+</div>
+
+<div class="nettoyeur"></div>
+
+[(#AUTORISER{modifier,cadeau_cheque,#ID_CADEAU_CHEQUE})
+	[(#ID_CADEAU_CHEQUE|afficher_qui_edite{cadeau_cheque}|non)
+		[(#URL_ECRIRE{cadeau_cheque_edit,id_cadeau_cheque=#ID_CADEAU_CHEQUE}|icone_verticale{<:cadeau_cheque:icone_modifier_cadeau_cheque:>,cadeau_cheque,edit,right ajax preload})]
+	]
+	[(#ID_CADEAU_CHEQUE|afficher_qui_edite{cadeau_cheque}|oui)
+		[(#URL_ECRIRE{cadeau_cheque_edit,id_cadeau_cheque=#ID_CADEAU_CHEQUE}|icone_verticale{#ID_CADEAU_CHEQUE|afficher_qui_edite{cadeau_cheque},warning-24,'',right edition_deja ajax preload})]
+	]
+]
+
+#PIPELINE{afficher_complement_objet,#ARRAY{args,#ARRAY{type,cadeau_cheque,id,#ID_CADEAU_CHEQUE},data,'<div class="nettoyeur"></div>'}}
+
+#BOITE_FERMER
+[(#EVAL{_AJAX}|oui)
+	<script type="text/javascript">/*<!\\[CDATA\\[*/reloadExecPage('#ENV{exec}','#navigation,#chemin,#extra');/*\\]\\]>*/</script>
+]
+</BOUCLE_cadeau_cheque>
+[(#ENV**{exec}|=={cadeau_cheque_edit}|?{#INCLURE{fond=prive/squelettes/contenu/cadeau_cheque_edit,redirect='',env,retourajax=oui},#REM|sinon_interdire_acces})]
+<//B_cadeau_cheque>

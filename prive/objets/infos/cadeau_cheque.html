@@ -1,0 +1,28 @@
+<BOUCLE_cadeau_cheque(CADEAU_CHEQUES){id_cadeau_cheque=#ENV{id}}{statut?}>
+<div class='infos'>
+[(#SET{texte_objet,<:cadeau_cheque:titre_cadeau_cheque:>})]
+<div class='numero'><:titre_cadre_numero_objet{objet=#GET{texte_objet}}:><p>#ID_CADEAU_CHEQUE</p></div>
+
+[(#FORMULAIRE_INSTITUER_OBJET{cadeau_cheques,#ID_CADEAU_CHEQUE})]
+
+[(#REM)
+
+	Bouton voir en ligne
+
+]
+<BOUCLE_publie(CADEAU_CHEQUES){id_cadeau_cheque}>
+	[(#VAL{redirect}
+		|generer_url_action{type=cadeau_cheques&id=#ID_CADEAU_CHEQUE}
+		|parametre_url{var_mode,calcul}
+		|icone_horizontale{<:icone_voir_en_ligne:>,racine})]
+</BOUCLE_publie>
+	[(#AUTORISER{previsualiser,cadeau_cheques,#ID_CADEAU_CHEQUE,'',#ARRAY{statut,#STATUT}})
+		[(#VAL{redirect}
+			|generer_url_action{type=cadeau_cheques&id=#ID_CADEAU_CHEQUE}
+			|parametre_url{var_mode,preview}
+			|icone_horizontale{<:previsualiser:>,preview})]
+	]
+<//B_publie>
+
+</div>
+</BOUCLE_cadeau_cheque>

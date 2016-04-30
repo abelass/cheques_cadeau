@@ -1,0 +1,30 @@
+[(#ID_OBJET|oui)
+	[(#AUTORISER{modifier,cadeau_cheque,#ID_CADEAU_CHEQUE}|sinon_interdire_acces)]
+][(#ID_OBJET|non)
+	[(#AUTORISER{creer,cadeau_cheque}|sinon_interdire_acces)]
+]
+ 
+#SET{redirect,#ENV{redirect}|sinon{#ID_CADEAU_CHEQUE|?{#ID_CADEAU_CHEQUE|generer_url_entite{cadeau_cheque},#URL_ECRIRE{cadeau_cheques}}}}
+
+<div class='cadre-formulaire-editer'>
+<div class="entete-formulaire">
+	[(#ID_CADEAU_CHEQUE|oui)
+	[(#GET{redirect}|icone_verticale{Retour,cadeau_cheque,'',left retour[(#ENV{retourajax,''}|oui)ajax preload]})]
+	]
+	[
+		[(#ID_CADEAU_CHEQUE|?{<:cadeau_cheque:icone_modifier_cadeau_cheque:>,<:cadeau_cheque:icone_creer_cadeau_cheque:>})]
+		<h1>(#ENV{titre,#INFO_TITRE{cadeau_cheque,#ID_CADEAU_CHEQUE}|sinon{<:info_sans_titre:>}})</h1>
+	]
+</div>
+
+#SET{redirect,#ENV{redirect,#ID_CADEAU_CHEQUE|generer_url_entite{cadeau_cheque}}}
+[(#ENV{retourajax,''}|oui)
+	#SET{redirect,'javascript:if (window.jQuery) jQuery(".entete-formulaire .retour a").followLink();'}
+	<div class="ajax">
+]
+		[(#FORMULAIRE_EDITER_CADEAU_CHEQUE{#ENV{id_cadeau_cheque,oui}, #GET{redirect}, #ENV{associer_objet}})]
+[(#ENV{retourajax,''}|oui)
+	</div>
+	<script type="text/javascript">/*<!\[CDATA\[*/reloadExecPage('#ENV{exec}');/*\]\]>*/</script>
+]
+</div>
