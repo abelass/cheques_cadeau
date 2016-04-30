@@ -40,7 +40,7 @@ function cheques_cadeau_declarer_tables_interfaces($interfaces) {
  */
 function cheques_cadeau_declarer_tables_objets_sql($tables) {
 
-	$tables['cadeau_cheques'] = array(
+	$tables['spip_cadeau_cheques'] = array(
 		'type' => 'cadeau_cheque',
 		'principale' => "oui", 
 		'table_objet_surnoms' => array('cadeaucheque'), // table_objet('cadeau_cheque') => 'cadeau_cheques' 
@@ -48,9 +48,8 @@ function cheques_cadeau_declarer_tables_objets_sql($tables) {
 			"id_cadeau_cheque"   => "bigint(21) NOT NULL",
 			"titre"              => "varchar(255) NOT NULL DEFAULT ''",
 			"descriptif"         => "text NOT NULL DEFAULT ''",
-			"prix"               => "float(38,2)",
-			"prix_ht"            => "float(38,2)",
-			"date"               => "datetime NOT NULL DEFAULT '0000-00-00 00:00:00'",
+			"prix"               => "float (38,2) NOT NULL",
+			"prix_ht"            => "float (38,2) NOT NULL",
 			"date"               => "datetime NOT NULL DEFAULT '0000-00-00 00:00:00'", 
 			"statut"             => "varchar(20)  DEFAULT '0' NOT NULL", 
 			"maj"                => "TIMESTAMP"
@@ -61,8 +60,8 @@ function cheques_cadeau_declarer_tables_objets_sql($tables) {
 		),
 		'titre' => "titre AS titre, '' AS lang",
 		'date' => "date",
-		'champs_editables'  => array('titre', 'descriptif', 'prix', 'prix_ht', 'date'),
-		'champs_versionnes' => array('titre', 'descriptif', 'prix', 'prix_ht', 'date'),
+		'champs_editables'  => array('titre', 'descriptif', 'prix', 'prix_ht'),
+		'champs_versionnes' => array('titre', 'descriptif', 'prix', 'prix_ht'),
 		'rechercher_champs' => array("titre" => 8),
 		'tables_jointures'  => array(),
 		'statut_textes_instituer' => array(

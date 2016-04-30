@@ -10,7 +10,6 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'ajouter_lien_cadeau_cheque' => 'Ajouter ce chèque cadeau',
 
 	// C
-	'champ_date_label' => 'Date',
 	'champ_descriptif_label' => 'Déscriptif',
 	'champ_prix_ht_label' => 'Prix Hors TVA',
 	'champ_prix_label' => 'Prix',

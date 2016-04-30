@@ -2,7 +2,7 @@
 
 /**
  *  Fichier généré par la Fabrique de plugin v5
- *   le 2016-04-30 12:47:17
+ *   le 2016-04-30 13:42:41
  *
  *  Ce fichier de sauvegarde peut servir à recréer
  *  votre plugin avec le plugin «Fabrique» qui a servi à le créer.
@@ -81,7 +81,7 @@ $data = array (
       'nom_singulier' => 'Chèque cadeau',
       'genre' => 'masculin',
       'logo_variantes' => '',
-      'table' => 'cadeau_cheques',
+      'table' => 'spip_cadeau_cheques',
       'cle_primaire' => 'id_cadeau_cheque',
       'cle_primaire_sql' => 'bigint(21) NOT NULL',
       'table_type' => 'cadeau_cheque',
@@ -122,7 +122,7 @@ $data = array (
         array (
           'nom' => 'Prix',
           'champ' => 'prix',
-          'sql' => 'float(38,2)',
+          'sql' => 'float (38,2) NOT NULL',
           'caracteristiques' => 
           array (
             0 => 'editable',
@@ -138,7 +138,7 @@ $data = array (
         array (
           'nom' => 'Prix Hors TVA',
           'champ' => 'prix_ht',
-          'sql' => 'float(38,2)',
+          'sql' => 'float (38,2) NOT NULL',
           'caracteristiques' => 
           array (
             0 => 'editable',
@@ -146,22 +146,7 @@ $data = array (
             2 => 'obligatoire',
           ),
           'recherche' => '',
-          'saisie' => '',
-          'explication' => '',
-          'saisie_options' => '',
-        ),
-        4 => 
-        array (
-          'nom' => 'Date',
-          'champ' => 'date',
-          'sql' => 'datetime NOT NULL DEFAULT \'0000-00-00 00:00:00\'',
-          'caracteristiques' => 
-          array (
-            0 => 'editable',
-            1 => 'versionne',
-          ),
-          'recherche' => '',
-          'saisie' => '',
+          'saisie' => 'input',
           'explication' => '',
           'saisie_options' => '',
         ),
