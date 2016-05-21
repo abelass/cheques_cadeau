@@ -11,6 +11,9 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'cfg_exemple_explication' => 'Explication de cet exemple',
 	'cfg_titre_parametrages' => 'Paramétrages',
 
+	// L
+	'label_objets' => 'Les objets cochés pourront être liés à des chèques cadeau',
+
 	// T
 	'titre_page_configurer_cheques_cadeau' => 'Chèque cadeau',
 );

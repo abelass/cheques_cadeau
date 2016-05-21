@@ -46,6 +46,9 @@
 
 	<pipeline nom="declarer_tables_objets_sql" inclure="base/cheques_cadeau.php" /> 
 	<pipeline nom="declarer_tables_interfaces" inclure="base/cheques_cadeau.php" /> 
+	<pipeline nom="declarer_tables_auxiliaires" inclure="base/cheques_cadeau.php" /> 
+	<pipeline nom="affiche_milieu" inclure="cheques_cadeau_pipelines.php" /> 
+	<pipeline nom="optimiser_base_disparus" inclure="cheques_cadeau_pipelines.php" />
 
 	<menu nom="cadeau_cheques" titre="cadeau_cheque:titre_cadeau_cheques" parent="menu_edition" icone="images/cadeau_cheque-16.png" action="cadeau_cheques" /> 
 	<menu nom="cadeau_cheque_creer" titre="cadeau_cheque:icone_creer_cadeau_cheque" parent="outils_rapides" icone="images/cadeau_cheque-new-16.png" action="cadeau_cheque_edit" parametres="new=oui" /> 
