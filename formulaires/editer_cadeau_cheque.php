@@ -96,7 +96,7 @@ function formulaires_editer_cadeau_cheque_charger_dist($id_cadeau_cheque='new', 
  */
 function formulaires_editer_cadeau_cheque_verifier_dist($id_cadeau_cheque='new', $retour='', $associer_objet='', $lier_trad=0, $config_fonc='', $row=array(), $hidden=''){
 
-	return formulaires_editer_objet_verifier('cadeau_cheque',$id_cadeau_cheque, array('titre', 'prix', 'prix_ht'));
+	return formulaires_editer_objet_verifier('cadeau_cheque',$id_cadeau_cheque, array('titre'));
 
 }
 

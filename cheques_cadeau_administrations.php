@@ -49,7 +49,7 @@ function cheques_cadeau_upgrade($nom_meta_base_version, $version_cible) {
 	# );
 	# ...
 
-	$maj['create'] = array(array('maj_tables', array('spip_cadeau_cheques')));
+	$maj['create'] = array(array('maj_tables', array('spip_cadeau_cheques', 'spip_cadeau_cheques_liens')));
 
 	include_spip('base/upgrade');
 	maj_plugin($nom_meta_base_version, $version_cible, $maj);
@@ -75,6 +75,7 @@ function cheques_cadeau_vider_tables($nom_meta_base_version) {
 	# sql_drop_table("spip_xx_liens");
 
 	sql_drop_table("spip_cadeau_cheques");
+	sql_drop_table("spip_cadeau_cheques_liens");
 
 	# Nettoyer les versionnages et forums
 	sql_delete("spip_versions",              sql_in("objet", array('cadeau_cheque')));

@@ -11,8 +11,6 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	// C
 	'champ_descriptif_label' => 'Déscriptif',
-	'champ_prix_ht_label' => 'Prix Hors TVA',
-	'champ_prix_label' => 'Prix',
 	'champ_titre_label' => 'Titre',
 
 	// I

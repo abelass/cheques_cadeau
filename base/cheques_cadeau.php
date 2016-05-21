@@ -48,8 +48,6 @@ function cheques_cadeau_declarer_tables_objets_sql($tables) {
 			"id_cadeau_cheque"   => "bigint(21) NOT NULL",
 			"titre"              => "varchar(255) NOT NULL DEFAULT ''",
 			"descriptif"         => "text NOT NULL DEFAULT ''",
-			"prix"               => "float (38,2) NOT NULL",
-			"prix_ht"            => "float (38,2) NOT NULL",
 			"date"               => "datetime NOT NULL DEFAULT '0000-00-00 00:00:00'", 
 			"statut"             => "varchar(20)  DEFAULT '0' NOT NULL", 
 			"maj"                => "TIMESTAMP"
@@ -60,10 +58,10 @@ function cheques_cadeau_declarer_tables_objets_sql($tables) {
 		),
 		'titre' => "titre AS titre, '' AS lang",
 		'date' => "date",
-		'champs_editables'  => array('titre', 'descriptif', 'prix', 'prix_ht'),
-		'champs_versionnes' => array('titre', 'descriptif', 'prix', 'prix_ht'),
+		'champs_editables'  => array('titre', 'descriptif'),
+		'champs_versionnes' => array('titre', 'descriptif'),
 		'rechercher_champs' => array("titre" => 8),
-		'tables_jointures'  => array(),
+		'tables_jointures'  => array('spip_cadeau_cheques_liens'),
 		'statut_textes_instituer' => array(
 			'prepa'    => 'texte_statut_en_cours_redaction',
 			'prop'     => 'texte_statut_propose_evaluation',
@@ -88,6 +86,33 @@ function cheques_cadeau_declarer_tables_objets_sql($tables) {
 	return $tables;
 }
 
+
+/**
+ * Déclaration des tables secondaires (liaisons)
+ *
+ * @pipeline declarer_tables_auxiliaires
+ * @param array $tables
+ *     Description des tables
+ * @return array
+ *     Description complétée des tables
+ */
+function cheques_cadeau_declarer_tables_auxiliaires($tables) {
+
+	$tables['spip_cadeau_cheques_liens'] = array(
+		'field' => array(
+			"id_cadeau_cheque"   => "bigint(21) DEFAULT '0' NOT NULL",
+			"id_objet"           => "bigint(21) DEFAULT '0' NOT NULL",
+			"objet"              => "VARCHAR(25) DEFAULT '' NOT NULL",
+			"vu"                 => "VARCHAR(6) DEFAULT 'non' NOT NULL"
+		),
+		'key' => array(
+			"PRIMARY KEY"        => "id_cadeau_cheque,id_objet,objet",
+			"KEY id_cadeau_cheque" => "id_cadeau_cheque"
+		)
+	);
+
+	return $tables;
+}
 
 
 ?>

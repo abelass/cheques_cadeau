@@ -2,7 +2,7 @@
 
 /**
  *  Fichier généré par la Fabrique de plugin v5
- *   le 2016-04-30 13:42:41
+ *   le 2016-05-21 13:25:02
  *
  *  Ce fichier de sauvegarde peut servir à recréer
  *  votre plugin avec le plugin «Fabrique» qui a servi à le créer.
@@ -118,38 +118,6 @@ $data = array (
           'explication' => '',
           'saisie_options' => '',
         ),
-        2 => 
-        array (
-          'nom' => 'Prix',
-          'champ' => 'prix',
-          'sql' => 'float (38,2) NOT NULL',
-          'caracteristiques' => 
-          array (
-            0 => 'editable',
-            1 => 'versionne',
-            2 => 'obligatoire',
-          ),
-          'recherche' => '',
-          'saisie' => 'input',
-          'explication' => '',
-          'saisie_options' => '',
-        ),
-        3 => 
-        array (
-          'nom' => 'Prix Hors TVA',
-          'champ' => 'prix_ht',
-          'sql' => 'float (38,2) NOT NULL',
-          'caracteristiques' => 
-          array (
-            0 => 'editable',
-            1 => 'versionne',
-            2 => 'obligatoire',
-          ),
-          'recherche' => '',
-          'saisie' => 'input',
-          'explication' => '',
-          'saisie_options' => '',
-        ),
       ),
       'champ_titre' => 'titre',
       'champ_date' => 'date',
@@ -175,7 +143,7 @@ $data = array (
         'texte_creer_associer_objet' => 'Créer et associer un chèque cadeau',
         'texte_changer_statut_objet' => 'Ce chèque cadeau est :',
       ),
-      'table_liens' => '',
+      'table_liens' => 'on',
       'vue_liens' => 
       array (
         0 => 'spip_articles',
