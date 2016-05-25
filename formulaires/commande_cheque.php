@@ -1,0 +1,191 @@
+<?php
+/**
+ * Gestion du formulaire de d'édition de cadeau_cheque
+ *
+ * @plugin     Chèque cadeau
+ * @copyright  2016
+ * @author     rainer
+ * @licence    GNU/GPL
+ * @package    SPIP\Cheques_cadeau\Formulaires
+ */
+
+if (!defined('_ECRIRE_INC_VERSION')) return;
+
+include_spip('inc/actions');
+include_spip('inc/editer');
+
+/**
+ * Identifier le formulaire en faisant abstraction des paramètres qui ne représentent pas l'objet edité
+ *
+ * @param int|string $id_cadeau_cheque
+ *     Identifiant du cadeau_cheque. 'new' pour un nouveau cadeau_cheque.
+ * @param string $retour
+ *     URL de redirection après le traitement
+ * @param string $associer_objet
+ *     Éventuel `objet|x` indiquant de lier le cadeau_cheque créé à cet objet,
+ *     tel que `article|3`
+ * @param int $lier_trad
+ *     Identifiant éventuel d'un cadeau_cheque source d'une traduction
+ * @param string $config_fonc
+ *     Nom de la fonction ajoutant des configurations particulières au formulaire
+ * @param array $row
+ *     Valeurs de la ligne SQL du cadeau_cheque, si connu
+ * @param string $hidden
+ *     Contenu HTML ajouté en même temps que les champs cachés du formulaire.
+ * @return string
+ *     Hash du formulaire
+ */
+function formulaires_commande_cheque_identifier_dist($id_cadeau_cheque='new', $retour='', $associer_objet='', $lier_trad=0, $config_fonc='', $row=array(), $hidden=''){
+	return serialize(array(intval($id_cadeau_cheque), $associer_objet));
+}
+
+/**
+ * Chargement du formulaire d'édition de cadeau_cheque
+ *
+ * Déclarer les champs postés et y intégrer les valeurs par défaut
+ *
+ * @uses formulaires_editer_objet_charger()
+ *
+ * @param int|string $id_cadeau_cheque
+ *     Identifiant du cadeau_cheque. 'new' pour un nouveau cadeau_cheque.
+ * @param string $retour
+ *     URL de redirection après le traitement
+ * @param string $associer_objet
+ *     Éventuel `objet|x` indiquant de lier le cadeau_cheque créé à cet objet,
+ *     tel que `article|3`
+ * @param int $lier_trad
+ *     Identifiant éventuel d'un cadeau_cheque source d'une traduction
+ * @param string $config_fonc
+ *     Nom de la fonction ajoutant des configurations particulières au formulaire
+ * @param array $row
+ *     Valeurs de la ligne SQL du cadeau_cheque, si connu
+ * @param string $hidden
+ *     Contenu HTML ajouté en même temps que les champs cachés du formulaire.
+ * @return array
+ *     Environnement du formulaire
+ */
+function formulaires_commande_cheque_charger_dist($id_cadeau_cheque, $options=array(), $retour=''){
+	
+	$valeurs = array(
+		'nom' => _request('nom'),
+		'email' => _request('email'),
+		'id_auteur' => session_get('id_auteur'),
+		'nom_beneficiaire' => _request('nom_beneficiaire'),
+		'email_beneficiaire' => _request('email'),
+		'id_cadeau_cheque' => $id_cadeau_cheque,
+		'cheques' => _request('cheques'),
+		'message' => _request('message'),
+	);
+	
+	return $valeurs;
+}
+
+/**
+ * Vérifications du formulaire d'édition de cadeau_cheque
+ *
+ * Vérifier les champs postés et signaler d'éventuelles erreurs
+ *
+ * @uses formulaires_editer_objet_verifier()
+ *
+ * @param int|string $id_cadeau_cheque
+ *     Identifiant du cadeau_cheque. 'new' pour un nouveau cadeau_cheque.
+ * @param string $retour
+ *     URL de redirection après le traitement
+ * @param string $associer_objet
+ *     Éventuel `objet|x` indiquant de lier le cadeau_cheque créé à cet objet,
+ *     tel que `article|3`
+ * @param int $lier_trad
+ *     Identifiant éventuel d'un cadeau_cheque source d'une traduction
+ * @param string $config_fonc
+ *     Nom de la fonction ajoutant des configurations particulières au formulaire
+ * @param array $row
+ *     Valeurs de la ligne SQL du cadeau_cheque, si connu
+ * @param string $hidden
+ *     Contenu HTML ajouté en même temps que les champs cachés du formulaire.
+ * @return array
+ *     Tableau des erreurs
+ */
+function formulaires_commande_cheque_verifier_dist($id_cadeau_cheque, $options=array(), $retour=''){
+	$obligatoires = array(
+		'nom',
+		'email',
+		'nom_beneficiaire',
+		'email_beneficiaire',
+		'cheques'
+	);
+	
+	/* AUTEUR
+	 * Si pas connecté on teste sur l'email, si présent on popose login, sinon login et mot de passe pour enregistrer
+	 */
+	
+	$erreurs = array();
+	foreach ($obligatoires AS $champ) {
+		if (!_request($champ))
+			$erreurs[$champ] = _T("info_obligatoire");
+	}
+
+	return $erreurs;
+
+}
+
+/**
+ * Traitement du formulaire d'édition de cadeau_cheque
+ *
+ * Traiter les champs postés
+ *
+ * @uses formulaires_editer_objet_traiter()
+ *
+ * @param int|string $id_cadeau_cheque
+ *     Identifiant du cadeau_cheque. 'new' pour un nouveau cadeau_cheque.
+ * @param string $retour
+ *     URL de redirection après le traitement
+ * @param string $associer_objet
+ *     Éventuel `objet|x` indiquant de lier le cadeau_cheque créé à cet objet,
+ *     tel que `article|3`
+ * @param int $lier_trad
+ *     Identifiant éventuel d'un cadeau_cheque source d'une traduction
+ * @param string $config_fonc
+ *     Nom de la fonction ajoutant des configurations particulières au formulaire
+ * @param array $row
+ *     Valeurs de la ligne SQL du cadeau_cheque, si connu
+ * @param string $hidden
+ *     Contenu HTML ajouté en même temps que les champs cachés du formulaire.
+ * @return array
+ *     Retours des traitements
+ */
+function formulaires_commande_cheque_traiter_dist($id_cadeau_cheque, $options=array(), $retour=''){
+	
+	
+	$id_commande = creer_commande_encours();
+	
+	// et la remplir les details de la commande d'après le panier en session
+	if ($id_commande){
+		cheques_remplir_commande($id_commande,$cheques,false);
+		
+		$set = array(
+			'nom_beneficiaire' => _request('nom_beneficiaire'),
+			'email_beneficiaire' => _request('email_beneficiaire'),
+			'message' => _request('message'),
+		);
+		if ($id_auteur = _request('id_auteur')) {
+			$set['id_auteur'] = _request('id_auteur');
+		}
+		
+		sql_updateq('spip_commandes', $set, 'id_commande=' . $id_commande);
+	}
+	
+	
+	
+	session_get('id_auteur')
+ 
+	// Un lien a prendre en compte ?
+	if (isset($res['redirect'])) {
+		$res['redirect'] = parametre_url ($res['redirect'], "id_lien_ajoute", $id_commande, '&');
+	}
+
+	return $res;
+
+}
+
+
+?>
