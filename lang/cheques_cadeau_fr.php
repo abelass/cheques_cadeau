@@ -28,6 +28,9 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'legende_informations_beneficiaire' => 'Informations bénéficiaire',
 	'legende_informations_cadeau' => 'Le cadeau',
 
+	// M
+	'message_ok_cheque_commande' => 'Votre commande a bien été enregistré',
+
 	// T
 	'titre_page_configurer_cheques_cadeau' => 'Chèque cadeau',
 );

@@ -221,7 +221,8 @@ function formulaires_commande_cheque_traiter_dist($id_cadeau_cheque, $options=ar
 	if (isset($res['redirect'])) {
 		$res['redirect'] = parametre_url ($res['redirect'], "id_lien_ajoute", $id_commande, '&');
 	}
-
+	$res['message_ok'] = _T('cheques_cadeau:message_ok_cheque_commande');
+	$res['message_ok'] .= recuperer_fond('inclure/commande',array('id_commande' => $id_commande));
 	return $res;
 
 }
