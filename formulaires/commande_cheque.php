@@ -65,14 +65,23 @@ function formulaires_commande_cheque_identifier_dist($id_cadeau_cheque='new', $r
  *     Environnement du formulaire
  */
 function formulaires_commande_cheque_charger_dist($id_cadeau_cheque = '', $options=array(), $retour=''){
-	
+	include_spip('inc/commandes');
+
 	$id_commande = creer_commande_encours();
+	
+	if ($id_auteur = session_get('id_auteur')) {
+		$auteur = sql_fetsel('nom,email', 'spip_auteurs', 'id_auteur=' . $id_auteur);
+	}
 	
 	$valeurs = array(
 		'id_commande' => $id_commande,
-		'nom' => _request('nom'),
-		'email' => _request('email'),
-		'id_auteur' => session_get('id_auteur'),
+		'nom' => _request('nom') ? _request('nom') : (
+				(isset($auteur['nom']) ? $auteur['nom'] : '')
+			),
+		'email' => _request('email') ? _request('email') : (
+				(isset($auteur['email']) ? $auteur['email'] : '')
+			),
+		'id_auteur' => $id_auteur,
 		'nom_beneficiaire' => _request('nom_beneficiaire'),
 		'email_beneficiaire' => _request('email'),
 		'id_cadeau_cheque' => $id_cadeau_cheque,
@@ -114,6 +123,9 @@ function formulaires_commande_cheque_charger_dist($id_cadeau_cheque = '', $optio
  *     Tableau des erreurs
  */
 function formulaires_commande_cheque_verifier_dist($id_cadeau_cheque, $options=array(), $retour=''){
+	$verifier = charger_fonction('verifier', 'inc/');
+	
+	// Les champs obligatoires.
 	$obligatoires = array(
 		'nom',
 		'email',
@@ -122,15 +134,23 @@ function formulaires_commande_cheque_verifier_dist($id_cadeau_cheque, $options=a
 		'cheques'
 	);
 	
-	/* AUTEUR
-	 * Si pas connecté on teste sur l'email, si présent on popose login, sinon login et mot de passe pour enregistrer
-	 */
-	
 	$erreurs = array();
 	foreach ($obligatoires AS $champ) {
 		if (!_request($champ))
 			$erreurs[$champ] = _T("info_obligatoire");
 	}
+	
+	// Vérficiations spécifiques.
+	$emails = array('email', 'email_beneficiaire');
+	foreach ($emails as $champ) {
+		if ($$champ = request($champ )){
+			$erreurs[$champ ] = $verifier($$champ, 'email');
+		}
+	}
+	
+	/* AUTEUR
+	 * Si pas connecté on teste sur l'email, si présent on popose login, sinon login et mot de passe pour enregistrer
+	 */
 
 	return $erreurs;
 

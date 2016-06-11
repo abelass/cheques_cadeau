@@ -1,20 +1,52 @@
-<div class='formulaire_spip formulaire_editer formulaire_#FORM formulaire_#FORM-#ENV{id_cadeau_cheque,nouveau}'>
+<div class='formulaire_spip formulaire_editer formulaire_#FORM formulaire_#FORM-#ENV{id_commande,nouveau}'>
 	[<p class="reponse_formulaire reponse_formulaire_ok">(#ENV**{message_ok})</p>]
 	[<p class="reponse_formulaire reponse_formulaire_erreur">(#ENV*{message_erreur})</p>]
 
 	[(#ENV{editable})
 	<form method='post' action='#ENV{action}'><div>
 		#ACTION_FORMULAIRE{#ENV{action}}
-		<input type='hidden' name='id_cadeau_cheque' value='#ENV{id_cadeau_cheque}' />
-		<ul>
-
-			[(#SAISIE{input, titre, obligatoire=oui,
-				label=<:cadeau_cheque:champ_titre_label:>})]
-
-			[(#SAISIE{textarea, descriptif,
-				label=<:cadeau_cheque:champ_descriptif_label:>})]
-
-		</ul>
+		<div class="editer_groupe">
+			<div class="fieldset fieldset_fieldset_coordonnees">
+				<fieldset>
+					<h3 class="legend">
+					<span><:cheques_cadeau:legende_coordonnees:></span>
+					</h3>
+					[(#ID_AUTEUR|oui)
+						[(#SAISIE{input,nom,
+							disable=oui,
+							label=<:cheques_cadeau:label_nom:>})]
+						[(#SAISIE{email,email,
+							disable=oui,
+							label=<:cheques_cadeau:label_email:>})]
+					]
+					[(#ID_AUTEUR|non)
+						#SET{url,#URL_PAGE{login}|parametre_url{url,#SELF}}
+						[(#SET{titre_login,<:lien_connecter:>})]
+						<strong class="explication"><:cheques_cadeau:explication_login{url=#GET{url},titre_login=#GET{titre_login}}:></strong>
+						[(#SAISIE{input,nom,
+							obligatoire=oui,
+							label=<:cheques_cadeau:label_nom:>})]
+						[(#SAISIE{email,email,
+							obligatoire=oui,
+							label = <:cheques_cadeau:label_email:>})]
+					]
+				</fieldset>
+			</div>
+			<div class="fieldset fieldset_fieldset_informations_beneficiaire">
+				<h3 class="legend">
+					<span><:cheques_cadeau:legende_informations_beneficiaire:></span>
+				</h3>
+				[(#SAISIE{input,nom_beneficiaire,
+					obligatoire=oui,
+					label=<:cheques_cadeau:label_nom_beneficiaire:>})]
+				[(#SAISIE{email,email,
+					obligatoire=oui,
+					label=<:cheques_cadeau:label_email_beneficiaire:>})]
+				[(#SAISIE{textarea,message,
+					label=<:cheques_cadeau:label_message:>,
+					explication=<:cheques_cadeau:explication_message:>})]
+			</div>
+		</div>
 		[(#REM) ajouter les saisies supplementaires : extra et autre, a cet endroit ]
 		<!--extra-->
 		<p class="boutons"><input type='submit' class='submit' value='<:bouton_enregistrer:>' /></p>

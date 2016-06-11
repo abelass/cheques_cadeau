@@ -10,9 +10,20 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'cfg_exemple' => 'Exemple',
 	'cfg_exemple_explication' => 'Explication de cet exemple',
 	'cfg_titre_parametrages' => 'Paramétrages',
+	
+	// E
+	'explication_login' => '<a rel="nofollow" class="login_modal" href="@url@" title="@titre_login@">Connectez-vous</a> si vous êtes déjà enregistré sur ce site',
+	'explication_message' => 'Message qui sera envoyé au bénificaire du chèque cadeau',
 
 	// L
-	'label_objets' => 'Les objets cochés pourront être liés à des chèques cadeau',
+	'label_email' => 'Votre adresse email :',
+	'label_email_beneficiaire' => 'Adresse email du bénéficiaire du chèque :',
+	'label_message' => 'Message pour le bénéficiaire :',
+	'label_nom' => 'Votre nom et prénom :',
+	'label_nom_beneficiaire' => 'Nom et prénom du bénéficiaire du chèque :',
+	'label_objets' => 'Les objets cochés pourront être liés à des chèques cadeau :',
+	'legende_coordonnees' => 'Vos coordonnées',
+	'legende_informations_beneficiaire' => 'Informations bénéficiaire',
 
 	// T
 	'titre_page_configurer_cheques_cadeau' => 'Chèque cadeau',

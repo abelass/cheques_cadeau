@@ -42,6 +42,7 @@
 	<necessite nom="cextras"  compatibilite="[	3.7.1;]" />
 	<necessite nom="commandes"  compatibilite="[1.8.6;]" />
 	<necessite nom="saisies"  compatibilite="[2.7.2;]" />
+	<necessite nom="verifier"  compatibilite="[1.0.9;]" />
 
 	<pipeline nom="autoriser" inclure="cheques_cadeau_autorisations.php" /> 
 
