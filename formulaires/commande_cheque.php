@@ -88,6 +88,7 @@ function formulaires_commande_cheque_charger_dist($id_cadeau_cheque = '', $optio
 		'montant' => _request('montant'),
 		'cheques' => _request('cheques'),
 		'message' => _request('message'),
+		'new_login' => _request('new_login'),
 	);
 	
 	$valeurs['_hidden'] .= '<input type="hidden" name="id_commande" value="' . $id_commande . '" />';
@@ -124,6 +125,7 @@ function formulaires_commande_cheque_charger_dist($id_cadeau_cheque = '', $optio
  *     Tableau des erreurs
  */
 function formulaires_commande_cheque_verifier_dist($id_cadeau_cheque, $options=array(), $retour=''){
+	include_spip('inc/session');
 	$verifier = charger_fonction('verifier', 'inc/');
 	
 	// Les champs obligatoires.
@@ -134,7 +136,30 @@ function formulaires_commande_cheque_verifier_dist($id_cadeau_cheque, $options=a
 	);
 	
 	if (!$id_auteur = session_get('id_auteur')) {
-		$obligatoires = array_merge($obligatoires,array('nom', 'email'));
+		$obligatoires = array_merge($obligatoires,array(
+			'nom',
+			'email',
+			'new_pass',
+			'new_login'
+		));
+		include_spip('inc/auth');
+		
+		//Vérifier le login
+		if ($err = auth_verifier_login($auth_methode, _request('new_login'), $id_auteur)) {
+			$erreurs['new_login'] = $err;
+			$erreurs['message_erreur'] .= $err;
+		}
+		
+		//Vérifier les mp
+		if ($p = _request('new_pass')) {
+			if ($p != _request('new_pass2')) {
+				$erreurs['new_pass'] = _T('info_passes_identiques');
+				$erreurs['message_erreur'] .= _T('info_passes_identiques');
+			}
+			elseif ($err = auth_verifier_pass($auth_methode, _request('new_login'), $p, $id_auteur)) {
+				$erreurs['new_pass'] = $err;
+			}
+		}
 	}
 	
 	$erreurs = array();
@@ -152,6 +177,12 @@ function formulaires_commande_cheque_verifier_dist($id_cadeau_cheque, $options=a
 			$erreurs[$champ] = $erreur;
 		}
 	}
+
+	if (_request('email')) {
+		if ($email_utilise = sql_getfetsel('email', 'spip_auteurs', 'email=' . sql_quote($email))) {
+			$erreurs['email'] = _T('cheques_cadeau:erreur_email_utilise');
+		}
+	}
 	
 	// le montant
 	if ($montant = _request('montant') AND $erreur = $verifier($montant, 'entier')){
@@ -160,7 +191,18 @@ function formulaires_commande_cheque_verifier_dist($id_cadeau_cheque, $options=a
 	/* AUTEUR
 	 * Si pas connecté on teste sur l'email, si présent on popose login, sinon login et mot de passe pour enregistrer
 	 */
-
+	
+	if (!$erreurs AND !$id_auteur) {
+		$res = formulaires_editer_objet_traiter ( 'auteur', 'new', '', '', $retour, $config_fonc, $row, $hidden );
+		$id_auteur = $res ['id_auteur'];
+		sql_updateq ('spip_auteurs'
+			, array (
+					'statut' => '6forum'
+					),
+			'id_auteur=' . $id_auteur );
+		$auteur = sql_fetsel ( '*', 'spip_auteurs', 'id_auteur=' . $id_auteur );
+		auth_loger ( $auteur );
+	}
 	return $erreurs;
 
 }
@@ -207,22 +249,14 @@ function formulaires_commande_cheque_traiter_dist($id_cadeau_cheque, $options=ar
 		);
 		
 		cheques_remplir_commande($id_commande, $id_cadeau_cheque, $options, false);
-		
-		/*$set = array(
-			'nom_beneficiaire' => _request('nom_beneficiaire'),
-			'email_beneficiaire' => _request('email_beneficiaire'),
-			'message' => _request('message'),
-		);
-		
-		sql_updateq('spip_commandes', $set, 'id_commande=' . $id_commande);*/
+		$res['message_ok'] = _T('cheques_cadeau:message_ok_cheque_commande');
+		$res['message_ok'] .= recuperer_fond('inclure/commande',array('id_commande' => $id_commande));
 	}
 	
 	// Un lien a prendre en compte ?
 	if (isset($res['redirect'])) {
 		$res['redirect'] = parametre_url ($res['redirect'], "id_lien_ajoute", $id_commande, '&');
 	}
-	$res['message_ok'] = _T('cheques_cadeau:message_ok_cheque_commande');
-	$res['message_ok'] .= recuperer_fond('inclure/commande',array('id_commande' => $id_commande));
 	return $res;
 
 }

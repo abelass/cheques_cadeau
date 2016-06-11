@@ -1,4 +1,4 @@
-<div class='formulaire_spip formulaire_editer formulaire_#FORM formulaire_#FORM-#ENV{id_commande,nouveau}'>
+<div class='formulaire_spip formulaire_editer formulaire_#FORM formulaire_#FORM-#ENV{id_commande,nouveau}'>#ENV
 	[<div class="reponse_formulaire reponse_formulaire_ok">(#ENV**{message_ok})</div>]
 	[<p class="reponse_formulaire reponse_formulaire_erreur">(#ENV*{message_erreur})</p>]
 
@@ -29,7 +29,23 @@
 							label=<:cheques_cadeau:label_nom:>})]
 						[(#SAISIE{email,email,
 							obligatoire=oui,
-							label = <:cheques_cadeau:label_email:>})]
+							label=<:cheques_cadeau:label_email:>})]
+						[(#SAISIE{input,new_login,
+							label=<:item_login:>,
+							obligatoire=#GET{obligatoire}
+						})]
+						[(#SAISIE{input,#ENV{name_new_pass,new_pass},
+							type="password",
+							label=<:cheques_cadeau:label_mot_passe:>,
+							obligatoire=#GET{obligatoire},
+							class=password,explication=<:info_plus_cinq_car:>
+						})]
+						[(#SAISIE{input,#ENV{name_new_pass2,new_pass2},
+							type="password",
+							label=<:cheques_cadeau:label_mot_passe2:>,
+							obligatoire=#GET{obligatoire},
+							class=password
+						})]
 					]
 				</fieldset>
 			</div>
