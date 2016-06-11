@@ -83,8 +83,9 @@ function formulaires_commande_cheque_charger_dist($id_cadeau_cheque = '', $optio
 			),
 		'id_auteur' => $id_auteur,
 		'nom_beneficiaire' => _request('nom_beneficiaire'),
-		'email_beneficiaire' => _request('email'),
+		'email_beneficiaire' => _request('email_beneficiaire'),
 		'id_cadeau_cheque' => $id_cadeau_cheque,
+		'montant' => _request('montant'),
 		'cheques' => _request('cheques'),
 		'message' => _request('message'),
 	);
@@ -127,12 +128,14 @@ function formulaires_commande_cheque_verifier_dist($id_cadeau_cheque, $options=a
 	
 	// Les champs obligatoires.
 	$obligatoires = array(
-		'nom',
-		'email',
+		'montant',
 		'nom_beneficiaire',
 		'email_beneficiaire',
-		'cheques'
 	);
+	
+	if (!$id_auteur = session_get('id_auteur')) {
+		$obligatoires = array_merge($obligatoires,array('nom', 'email'));
+	}
 	
 	$erreurs = array();
 	foreach ($obligatoires AS $champ) {
@@ -141,13 +144,19 @@ function formulaires_commande_cheque_verifier_dist($id_cadeau_cheque, $options=a
 	}
 	
 	// Vérficiations spécifiques.
+	
+	// Les mails
 	$emails = array('email', 'email_beneficiaire');
 	foreach ($emails as $champ) {
-		if ($$champ = request($champ )){
-			$erreurs[$champ ] = $verifier($$champ, 'email');
+		if ($$champ = _request($champ ) AND $erreur = $verifier($$champ, 'email')){
+			$erreurs[$champ] = $erreur;
 		}
 	}
 	
+	// le montant
+	if ($montant = _request('montant') AND $erreur = $verifier($montant, 'entier')){
+		$erreurs['montant'] = $erreur;
+	}
 	/* AUTEUR
 	 * Si pas connecté on teste sur l'email, si présent on popose login, sinon login et mot de passe pour enregistrer
 	 */
@@ -185,8 +194,8 @@ function formulaires_commande_cheque_traiter_dist($id_cadeau_cheque, $options=ar
 	
 	// et la remplir les details de la commande d'après le panier en session
 	if ($id_commande = _request('id_commande')){
-		
-		cheques_remplir_commande($id_commande, _request('cheques'),false);
+		include_spip('action/commandes_cheques');
+		cheques_remplir_commande($id_commande, $id_cadeau_cheque, $options, false);
 		
 		/*$set = array(
 			'nom_beneficiaire' => _request('nom_beneficiaire'),
