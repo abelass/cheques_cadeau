@@ -197,7 +197,7 @@ function formulaires_commande_cheque_traiter_dist($id_cadeau_cheque, $options=ar
 		include_spip('action/editer_objet');
 		include_spip('action/commandes_cheques');
 		
-		// noter le panier source dans le champ source de la commande
+		// Enregistrer les informations de la commande.
 		objet_modifier('commande', $id_commande, array(
 				'statut' => 'attente',
 				'nom_beneficiaire' =>_request('nom_beneficiaire'),
