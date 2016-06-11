@@ -64,9 +64,12 @@ function formulaires_commande_cheque_identifier_dist($id_cadeau_cheque='new', $r
  * @return array
  *     Environnement du formulaire
  */
-function formulaires_commande_cheque_charger_dist($id_cadeau_cheque, $options=array(), $retour=''){
+function formulaires_commande_cheque_charger_dist($id_cadeau_cheque = '', $options=array(), $retour=''){
+	
+	$id_commande = creer_commande_encours();
 	
 	$valeurs = array(
+		'id_commande' => $id_commande,
 		'nom' => _request('nom'),
 		'email' => _request('email'),
 		'id_auteur' => session_get('id_auteur'),
@@ -76,6 +79,11 @@ function formulaires_commande_cheque_charger_dist($id_cadeau_cheque, $options=ar
 		'cheques' => _request('cheques'),
 		'message' => _request('message'),
 	);
+	
+	$valeurs['_hidden'] .= '<input type="hidden" name="id_commande" value="' . $id_commande . '" />';
+	if ($id_cadeau_cheque) {
+		$valeurs['_hidden'] .= '<input type="hidden" name="id_cadeau_cheque" value="' . $id_cadeau_cheque . '" />';
+	}
 	
 	return $valeurs;
 }
@@ -155,29 +163,20 @@ function formulaires_commande_cheque_verifier_dist($id_cadeau_cheque, $options=a
  */
 function formulaires_commande_cheque_traiter_dist($id_cadeau_cheque, $options=array(), $retour=''){
 	
-	
-	$id_commande = creer_commande_encours();
-	
 	// et la remplir les details de la commande d'après le panier en session
-	if ($id_commande){
-		cheques_remplir_commande($id_commande,$cheques,false);
+	if ($id_commande = _request('id_commande')){
 		
-		$set = array(
+		cheques_remplir_commande($id_commande, _request('cheques'),false);
+		
+		/*$set = array(
 			'nom_beneficiaire' => _request('nom_beneficiaire'),
 			'email_beneficiaire' => _request('email_beneficiaire'),
 			'message' => _request('message'),
 		);
-		if ($id_auteur = _request('id_auteur')) {
-			$set['id_auteur'] = _request('id_auteur');
-		}
 		
-		sql_updateq('spip_commandes', $set, 'id_commande=' . $id_commande);
+		sql_updateq('spip_commandes', $set, 'id_commande=' . $id_commande);*/
 	}
 	
-	
-	
-	session_get('id_auteur')
- 
 	// Un lien a prendre en compte ?
 	if (isset($res['redirect'])) {
 		$res['redirect'] = parametre_url ($res['redirect'], "id_lien_ajoute", $id_commande, '&');
@@ -186,6 +185,3 @@ function formulaires_commande_cheque_traiter_dist($id_cadeau_cheque, $options=ar
 	return $res;
 
 }
-
-
-?>

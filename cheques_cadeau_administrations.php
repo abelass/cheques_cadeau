@@ -30,6 +30,13 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
 **/
 function cheques_cadeau_upgrade($nom_meta_base_version, $version_cible) {
 	$maj = array();
+	
+	// Créer les champs extras.
+	extras_api_upgrade(cheques_cadeau_declarer_champs_extras(), $maj['create']);
+	
+	include_spip('base/upgrade');
+	maj_plugin($nom_meta_base_version, $version_cible, $maj);
+	
 	# quelques exemples
 	# (que vous pouvez supprimer !)
 	# 
@@ -53,6 +60,10 @@ function cheques_cadeau_upgrade($nom_meta_base_version, $version_cible) {
 
 	include_spip('base/upgrade');
 	maj_plugin($nom_meta_base_version, $version_cible, $maj);
+	
+	// Eliminer les champs extras.
+	cextras_api_vider_tables(cheques_cadeau_declarer_champs_extras());
+	effacer_meta($nom_meta_base_version);
 }
 
 

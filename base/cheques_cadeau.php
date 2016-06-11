@@ -114,5 +114,54 @@ function cheques_cadeau_declarer_tables_auxiliaires($tables) {
 	return $tables;
 }
 
-
-?>
+/**
+ * Déclaration des champs extras
+ * 
+ * @pipeline declarer_champs_extras
+ * @param array $champs
+ *     Description des champs
+ */
+function cheques_cadeau_declarer_champs_extras($champs = array()) {
+	$champs['spip_commandes'] = array(
+		'nom_beneficiaire' => array(
+			'saisie' => 'input',//Type du champ (voir plugin Saisies)
+			'options' => array(
+				'nom' => 'nom_beneficiaire',
+				'label' => _T('cheques_cadeau:label_nom_beneficiaire'),
+				'sql' => "varchar(255) NOT NULL DEFAULT ''",
+				'versionner' => true,
+				'restrictions' => array('voir' => array('auteur' => ''),//Tout le monde peut voir
+					'modifier' => array('auteur' => 'admin')),//Seuls les webmestres peuvent modifier
+			),
+		),
+		'email_beneficiaire' => array(
+			'saisie' => 'email',//Type du champ (voir plugin Saisies)
+			'options' => array(
+				'nom' => 'email_beneficiaire',
+				'label' => _T('cheques_cadeau:label_email_beneficiaire'),
+				'sql' => "varchar(255) NOT NULL DEFAULT ''",
+				'versionner' => true,
+				'verifier' => array(
+					'type' => 'email',
+				),
+				'restrictions' => array('voir' => array('auteur' => ''),//Tout le monde peut voir
+					'modifier' => array('auteur' => 'webmestre')),//Seuls les webmestres peuvent modifier
+			),
+		),
+		'message' => array(
+			'saisie' => 'textarea',//Type du champ (voir plugin Saisies)
+			'options' => array(
+				'nom' => 'message',
+				'label' => _T('cheques_cadeau:label_message'),
+				'sql' => "text NOT NULL DEFAULT ''",
+				'versionner' => true,
+				'verifier' => array(
+					'type' => 'email',
+				),
+				'restrictions'=>array('voir' => array('auteur' => ''),//Tout le monde peut voir
+					'modifier' => array('auteur' => 'webmestre')),//Seuls les webmestres peuvent modifier
+			),
+		),
+	);
+	return $champs;
+}

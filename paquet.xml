@@ -39,8 +39,9 @@
 		<onglet nom="cheques_cadeau" titre="cheques_cadeau:cheques_cadeau_titre" parent="configuration" icone="images/cheques_cadeau-24.png" />
 	-->
 
-	<necessite nom="saisies"  compatibilite="[1.24.0;]" /> 
-
+	<necessite nom="cextras"  compatibilite="[	3.7.1;]" />
+	<necessite nom="commandes"  compatibilite="[1.8.6;]" />
+	<necessite nom="saisies"  compatibilite="[2.7.2;]" />
 
 	<pipeline nom="autoriser" inclure="cheques_cadeau_autorisations.php" /> 
 
@@ -49,6 +50,7 @@
 	<pipeline nom="declarer_tables_auxiliaires" inclure="base/cheques_cadeau.php" /> 
 	<pipeline nom="affiche_milieu" inclure="cheques_cadeau_pipelines.php" /> 
 	<pipeline nom="optimiser_base_disparus" inclure="cheques_cadeau_pipelines.php" />
+	<pipeline nom="declarer_champs_extras" inclure="base/cheques_cadeau.php" />
 
 	<menu nom="cadeau_cheques" titre="cadeau_cheque:titre_cadeau_cheques" parent="menu_edition" icone="images/cadeau_cheque-16.png" action="cadeau_cheques" /> 
 	<menu nom="cadeau_cheque_creer" titre="cadeau_cheque:icone_creer_cadeau_cheque" parent="outils_rapides" icone="images/cadeau_cheque-new-16.png" action="cadeau_cheque_edit" parametres="new=oui" /> 
