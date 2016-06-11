@@ -145,7 +145,7 @@ function cheques_cadeau_declarer_champs_extras($champs = array()) {
 					'type' => 'email',
 				),
 				'restrictions' => array('voir' => array('auteur' => ''),//Tout le monde peut voir
-					'modifier' => array('auteur' => 'webmestre')),//Seuls les webmestres peuvent modifier
+					'modifier' => array('auteur' => 'admin')),//Seuls les webmestres peuvent modifier
 			),
 		),
 		'message' => array(
@@ -159,7 +159,7 @@ function cheques_cadeau_declarer_champs_extras($champs = array()) {
 					'type' => 'email',
 				),
 				'restrictions'=>array('voir' => array('auteur' => ''),//Tout le monde peut voir
-					'modifier' => array('auteur' => 'webmestre')),//Seuls les webmestres peuvent modifier
+					'modifier' => array('auteur' => 'admin')),//Seuls les webmestres peuvent modifier
 			),
 		),
 	);

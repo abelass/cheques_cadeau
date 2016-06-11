@@ -194,7 +194,18 @@ function formulaires_commande_cheque_traiter_dist($id_cadeau_cheque, $options=ar
 	
 	// et la remplir les details de la commande d'après le panier en session
 	if ($id_commande = _request('id_commande')){
+		include_spip('action/editer_objet');
 		include_spip('action/commandes_cheques');
+		
+		// noter le panier source dans le champ source de la commande
+		objet_modifier('commande', $id_commande, array(
+				'statut' => 'attente',
+				'nom_beneficiaire' =>_request('nom_beneficiaire'),
+				'email_beneficiaire' =>_request('email_beneficiaire'),
+				'message' =>_request('message'),
+			)
+		);
+		
 		cheques_remplir_commande($id_commande, $id_cadeau_cheque, $options, false);
 		
 		/*$set = array(
