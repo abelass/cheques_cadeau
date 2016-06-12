@@ -192,17 +192,6 @@ function formulaires_commande_cheque_verifier_dist($id_cadeau_cheque, $options=a
 	 * Si pas connecté on teste sur l'email, si présent on popose login, sinon login et mot de passe pour enregistrer
 	 */
 	
-	if (!$erreurs AND !$id_auteur) {
-		$res = formulaires_editer_objet_traiter ( 'auteur', 'new', '', '', $retour, $config_fonc, $row, $hidden );
-		$id_auteur = $res ['id_auteur'];
-		sql_updateq ('spip_auteurs'
-			, array (
-					'statut' => '6forum'
-					),
-			'id_auteur=' . $id_auteur );
-		$auteur = sql_fetsel ( '*', 'spip_auteurs', 'id_auteur=' . $id_auteur );
-		auth_loger ( $auteur );
-	}
 	return $erreurs;
 
 }
@@ -233,6 +222,31 @@ function formulaires_commande_cheque_verifier_dist($id_cadeau_cheque, $options=a
  *     Retours des traitements
  */
 function formulaires_commande_cheque_traiter_dist($id_cadeau_cheque, $options=array(), $retour=''){
+	include_spip('inc/session');
+	
+	// Créer un compte si nécessaire.
+	if (!$id_auteur = session_get('id_auteur')) {
+		$res = formulaires_editer_objet_traiter (
+				'auteur',
+				'new',
+				'',
+				'',
+				$retour,
+				$config_fonc,
+				$row,
+				$hidden
+				);
+		$id_auteur = $res ['id_auteur'];
+		sql_updateq (
+				'spip_auteurs',
+				array('statut' => '6forum'),
+				'id_auteur=' . $id_auteur
+				);
+				$auteur = sql_fetsel( '*', 'spip_auteurs', 'id_auteur=' . $id_auteur );
+				
+				// Se loguer qvec le nouveau compte.
+				auth_loger($auteur);
+	}
 	
 	// et la remplir les details de la commande d'après le panier en session
 	if ($id_commande = _request('id_commande')){
