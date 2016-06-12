@@ -11,9 +11,6 @@
 
 if (!defined('_ECRIRE_INC_VERSION')) return;
 
-include_spip('inc/actions');
-include_spip('inc/editer');
-
 /**
  * Identifier le formulaire en faisant abstraction des paramètres qui ne représentent pas l'objet edité
  *

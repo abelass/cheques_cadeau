@@ -10,15 +10,30 @@
  */
 
 if (!defined('_ECRIRE_INC_VERSION')) return;
-	
 
-/*
- * Un fichier de pipelines permet de regrouper
- * les fonctions de branchement de votre plugin
- * sur des pipelines existants.
+
+/**
+ * agit lors de l’édition d’un élément éditorial, 
+ * lorsque l’utilisateur édite les champs ou change le statut de l’objet. 
+ * Il est appelé juste après l’enregistrement des données.
+ *
+ * @pipeline affiche_milieu
+ * @param  array $flux Données du pipeline
+ * @return array       Données du pipeline
  */
-
-
+function cheques_cadeau_post_edition($flux) {
+	
+	if (is_array($flux) and isset($flux['args']['type']) && $flux['args']['type'] == 'commande') {
+		if ($flux['data']['statut'] == 'paye' 
+				and $notifications = charger_fonction('notifications', 'inc', true)
+				and 
+				) {
+				$notifications('commande_client', $id_commande, $options);
+			
+		}
+	}
+	return $flux;
+}
 
 /**
  * Ajout de contenu sur certaines pages,
