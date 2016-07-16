@@ -11,9 +11,6 @@
 
 if (!defined('_ECRIRE_INC_VERSION')) return;
 
-include_spip('inc/actions');
-include_spip('inc/editer');
-
 /**
  * Chargement du formulaire d'édition de cadeau_cheque
  *
@@ -29,9 +26,7 @@ include_spip('inc/editer');
  *     Environnement du formulaire
  */
 function formulaires_commande_cheque_charger_dist($id_cadeau_cheque = '', $options=array(), $retour=''){
-	include_spip('inc/commandes');
-
-	$id_commande = creer_commande_encours();
+	include_spip('inc/session');
 	
 	if ($id_auteur = session_get('id_auteur')) {
 		$auteur = sql_fetsel('nom,email', 'spip_auteurs', 'id_auteur=' . $id_auteur);
@@ -52,6 +47,7 @@ function formulaires_commande_cheque_charger_dist($id_cadeau_cheque = '', $optio
 		'montant' => _request('montant'),
 		'cheques' => _request('cheques'),
 		'message' => _request('message'),
+		'new_pass' => _request('new_pass'),
 		'new_login' => _request('new_login'),
 	);
 	
@@ -145,17 +141,6 @@ function formulaires_commande_cheque_verifier_dist($id_cadeau_cheque, $options=a
 	 * Si pas connecté on teste sur l'email, si présent on popose login, sinon login et mot de passe pour enregistrer
 	 */
 	
-	if (!$erreurs AND !$id_auteur) {
-		$res = formulaires_editer_objet_traiter ( 'auteur', 'new', '', '', $retour, $config_fonc, $row, $hidden );
-		$id_auteur = $res ['id_auteur'];
-		sql_updateq ('spip_auteurs'
-			, array (
-					'statut' => '6forum'
-					),
-			'id_auteur=' . $id_auteur );
-		$auteur = sql_fetsel ( '*', 'spip_auteurs', 'id_auteur=' . $id_auteur );
-		auth_loger ( $auteur );
-	}
 	return $erreurs;
 
 }
@@ -177,30 +162,57 @@ function formulaires_commande_cheque_verifier_dist($id_cadeau_cheque, $options=a
  *     Retours des traitements
  */
 function formulaires_commande_cheque_traiter_dist($id_cadeau_cheque, $options=array(), $retour=''){
+	include_spip('inc/session');
+	include_spip('action/editer_objet');
+	include_spip('action/commandes_cheques');
+	include_spip('inc/commandes');
+	
+	// Créer un compte si nécessaire.
+	if (!$id_auteur = session_get('id_auteur')) {
+		$res = formulaires_editer_objet_traiter (
+				'auteur',
+				'new',
+				'',
+				'',
+				$retour,
+				$config_fonc,
+				$row,
+				$hidden
+				);
+		$id_auteur = $res ['id_auteur'];
+		sql_updateq (
+				'spip_auteurs',
+				array('statut' => '6forum'),
+				'id_auteur=' . $id_auteur
+				);
+				$auteur = sql_fetsel( '*', 'spip_auteurs', 'id_auteur=' . $id_auteur );
+				
+				// Se loguer qvec le nouveau compte.
+				auth_loger($auteur);
+	}
+	
+	$id_commande = creer_commande_encours();
 	
 	// et la remplir les details de la commande d'après le panier en session
-	if ($id_commande = _request('id_commande')){
-		include_spip('action/editer_objet');
-		include_spip('action/commandes_cheques');
-		
-		// Enregistrer les informations de la commande.
-		objet_modifier('commande', $id_commande, array(
-				'statut' => 'attente',
-				'nom_beneficiaire' =>_request('nom_beneficiaire'),
-				'email_beneficiaire' =>_request('email_beneficiaire'),
-				'message' =>_request('message'),
-			)
-		);
-		
-		cheques_remplir_commande($id_commande, $id_cadeau_cheque, $options, false);
-		$res['message_ok'] = _T('cheques_cadeau:message_ok_cheque_commande');
-		$res['message_ok'] .= recuperer_fond('inclure/commande',array('id_commande' => $id_commande));
-	}
+	
+	// Enregistrer les informations de la commande.
+	objet_modifier('commande', $id_commande, array(
+			'statut' => 'attente',
+			'nom_beneficiaire' =>_request('nom_beneficiaire'),
+			'email_beneficiaire' =>_request('email_beneficiaire'),
+			'message' =>_request('message'),
+		)
+	);
+	
+	cheques_remplir_commande($id_commande, $id_cadeau_cheque, $options, false);
+	$res['message_ok'] = _T('cheques_cadeau:message_ok_cheque_commande');
+	$res['message_ok'] .= recuperer_fond('inclure/commande',array('id_commande' => $id_commande));
+	
 	
 	// Un lien a prendre en compte ?
-	if (isset($res['redirect'])) {
+	/*if (isset($res['redirect'])) {
 		$res['redirect'] = parametre_url ($res['redirect'], "id_lien_ajoute", $id_commande, '&');
-	}
+	}*/
 	return $res;
 
 }
