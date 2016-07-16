@@ -66,6 +66,10 @@ function formulaires_editer_cadeau_cheque_identifier_dist($id_cadeau_cheque='new
  */
 function formulaires_editer_cadeau_cheque_charger_dist($id_cadeau_cheque='new', $retour='', $associer_objet='', $lier_trad=0, $config_fonc='', $row=array(), $hidden=''){
 	$valeurs = formulaires_editer_objet_charger('cadeau_cheque',$id_cadeau_cheque,'',$lier_trad,$retour,$config_fonc,$row,$hidden);
+
+	$valeurs['statut'] = !empty($valeurs['statut']) ? $valeurs['statut'] : 'publie';
+	$valeurs['_hidden'] .= '<input type="hidden" name="statut" value="' . $valeurs['statut'] . '" />';
+
 	return $valeurs;
 }
 

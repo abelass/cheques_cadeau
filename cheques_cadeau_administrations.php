@@ -38,7 +38,6 @@ function cheques_cadeau_upgrade($nom_meta_base_version, $version_cible) {
 	// Installer les tables nécessaires
 	$maj['create'][] = array('maj_tables', array('spip_cadeau_cheques', 'spip_cadeau_cheques_liens'));
 
-	
 	include_spip('base/upgrade');
 	
 	maj_plugin($nom_meta_base_version, $version_cible, $maj);
