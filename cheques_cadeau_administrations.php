@@ -11,6 +11,8 @@
 
 if (!defined('_ECRIRE_INC_VERSION')) return;
 
+include_spip('inc/cextras');
+include_spip('base/cheques_cadeau');
 
 /**
  * Fonction d'installation et de mise à jour du plugin Chèque cadeau.
@@ -30,42 +32,18 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
 **/
 function cheques_cadeau_upgrade($nom_meta_base_version, $version_cible) {
 	$maj = array();
-	
+
 	// Créer les champs extras.
-	extras_api_upgrade(cheques_cadeau_declarer_champs_extras(), $maj['create']);
+	cextras_api_upgrade(cheques_cadeau_declarer_champs_extras(), $maj['create']);
+	// Installer les tables nécessaires
+	$maj['create'][] = array('maj_tables', array('spip_cadeau_cheques', 'spip_cadeau_cheques_liens'));
+
 	
 	include_spip('base/upgrade');
-	maj_plugin($nom_meta_base_version, $version_cible, $maj);
 	
-	# quelques exemples
-	# (que vous pouvez supprimer !)
-	# 
-	# $maj['create'] = array(array('creer_base'));
-	#
-	# include_spip('inc/config')
-	# $maj['create'] = array(
-	#	array('maj_tables', array('spip_xx', 'spip_xx_liens')),
-	#	array('ecrire_config', array('cheques_cadeau', array('exemple' => "Texte de l'exemple")))
-	#);
-	#
-	# $maj['1.1.0']  = array(array('sql_alter','TABLE spip_xx RENAME TO spip_yy'));
-	# $maj['1.2.0']  = array(array('sql_alter','TABLE spip_xx DROP COLUMN id_auteur'));
-	# $maj['1.3.0']  = array(
-	#	array('sql_alter','TABLE spip_xx CHANGE numero numero int(11) default 0 NOT NULL'),
-	#	array('sql_alter','TABLE spip_xx CHANGE texte petit_texte mediumtext NOT NULL default \'\''),
-	# );
-	# ...
-
-	$maj['create'] = array(array('maj_tables', array('spip_cadeau_cheques', 'spip_cadeau_cheques_liens')));
-
-	include_spip('base/upgrade');
 	maj_plugin($nom_meta_base_version, $version_cible, $maj);
-	
-	// Eliminer les champs extras.
-	cextras_api_vider_tables(cheques_cadeau_declarer_champs_extras());
-	effacer_meta($nom_meta_base_version);
+
 }
-
 
 /**
  * Fonction de désinstallation du plugin Chèque cadeau.
@@ -80,10 +58,6 @@ function cheques_cadeau_upgrade($nom_meta_base_version, $version_cible) {
  * @return void
 **/
 function cheques_cadeau_vider_tables($nom_meta_base_version) {
-	# quelques exemples
-	# (que vous pouvez supprimer !)
-	# sql_drop_table("spip_xx");
-	# sql_drop_table("spip_xx_liens");
 
 	sql_drop_table("spip_cadeau_cheques");
 	sql_drop_table("spip_cadeau_cheques_liens");
@@ -92,6 +66,9 @@ function cheques_cadeau_vider_tables($nom_meta_base_version) {
 	sql_delete("spip_versions",              sql_in("objet", array('cadeau_cheque')));
 	sql_delete("spip_versions_fragments",    sql_in("objet", array('cadeau_cheque')));
 	sql_delete("spip_forum",                 sql_in("objet", array('cadeau_cheque')));
+	
+	// Eliminer les champs extras.
+	cextras_api_vider_tables(cheques_cadeau_declarer_champs_extras());
 
 	effacer_meta($nom_meta_base_version);
 }
