@@ -39,7 +39,7 @@ function cheques_remplir_commande($id_commande, $id_cadeau_cheque, $options = ar
 		'id_commande' => $id_commande,
 		'objet' => 'cadeau_cheque',
 		'id_objet' => $id_cadeau_cheque,
-		'descriptif' => generer_info_entite($id_cadeau_cheque, 'cadeau_cheque', 'titre', '*'),
+		'descriptif' => generer_info_entite($id_cadeau_cheque, 'cadeau_cheque', 'titre'),
 		'quantite' => 1,
 		'prix_unitaire_ht' => _request('montant') ? _request('montant') : 
 			(isset($options['montant']) ? $options['montant'] : 0),

@@ -15,52 +15,16 @@ include_spip('inc/actions');
 include_spip('inc/editer');
 
 /**
- * Identifier le formulaire en faisant abstraction des paramètres qui ne représentent pas l'objet edité
- *
- * @param int|string $id_cadeau_cheque
- *     Identifiant du cadeau_cheque. 'new' pour un nouveau cadeau_cheque.
- * @param string $retour
- *     URL de redirection après le traitement
- * @param string $associer_objet
- *     Éventuel `objet|x` indiquant de lier le cadeau_cheque créé à cet objet,
- *     tel que `article|3`
- * @param int $lier_trad
- *     Identifiant éventuel d'un cadeau_cheque source d'une traduction
- * @param string $config_fonc
- *     Nom de la fonction ajoutant des configurations particulières au formulaire
- * @param array $row
- *     Valeurs de la ligne SQL du cadeau_cheque, si connu
- * @param string $hidden
- *     Contenu HTML ajouté en même temps que les champs cachés du formulaire.
- * @return string
- *     Hash du formulaire
- */
-function formulaires_commande_cheque_identifier_dist($id_cadeau_cheque='new', $retour='', $associer_objet='', $lier_trad=0, $config_fonc='', $row=array(), $hidden=''){
-	return serialize(array(intval($id_cadeau_cheque), $associer_objet));
-}
-
-/**
  * Chargement du formulaire d'édition de cadeau_cheque
  *
  * Déclarer les champs postés et y intégrer les valeurs par défaut
  *
- * @uses formulaires_editer_objet_charger()
- *
  * @param int|string $id_cadeau_cheque
  *     Identifiant du cadeau_cheque. 'new' pour un nouveau cadeau_cheque.
+ * @param array $options
+ *     à definir
  * @param string $retour
  *     URL de redirection après le traitement
- * @param string $associer_objet
- *     Éventuel `objet|x` indiquant de lier le cadeau_cheque créé à cet objet,
- *     tel que `article|3`
- * @param int $lier_trad
- *     Identifiant éventuel d'un cadeau_cheque source d'une traduction
- * @param string $config_fonc
- *     Nom de la fonction ajoutant des configurations particulières au formulaire
- * @param array $row
- *     Valeurs de la ligne SQL du cadeau_cheque, si connu
- * @param string $hidden
- *     Contenu HTML ajouté en même temps que les champs cachés du formulaire.
  * @return array
  *     Environnement du formulaire
  */
@@ -104,23 +68,12 @@ function formulaires_commande_cheque_charger_dist($id_cadeau_cheque = '', $optio
  *
  * Vérifier les champs postés et signaler d'éventuelles erreurs
  *
- * @uses formulaires_editer_objet_verifier()
- *
  * @param int|string $id_cadeau_cheque
  *     Identifiant du cadeau_cheque. 'new' pour un nouveau cadeau_cheque.
+ * @param array $options
+ *     à definir
  * @param string $retour
  *     URL de redirection après le traitement
- * @param string $associer_objet
- *     Éventuel `objet|x` indiquant de lier le cadeau_cheque créé à cet objet,
- *     tel que `article|3`
- * @param int $lier_trad
- *     Identifiant éventuel d'un cadeau_cheque source d'une traduction
- * @param string $config_fonc
- *     Nom de la fonction ajoutant des configurations particulières au formulaire
- * @param array $row
- *     Valeurs de la ligne SQL du cadeau_cheque, si connu
- * @param string $hidden
- *     Contenu HTML ajouté en même temps que les champs cachés du formulaire.
  * @return array
  *     Tableau des erreurs
  */
@@ -212,23 +165,14 @@ function formulaires_commande_cheque_verifier_dist($id_cadeau_cheque, $options=a
  *
  * Traiter les champs postés
  *
- * @uses formulaires_editer_objet_traiter()
+ * @uses cheques_remplir_commande()
  *
  * @param int|string $id_cadeau_cheque
  *     Identifiant du cadeau_cheque. 'new' pour un nouveau cadeau_cheque.
+ * @param array $options
+ *     à definir
  * @param string $retour
  *     URL de redirection après le traitement
- * @param string $associer_objet
- *     Éventuel `objet|x` indiquant de lier le cadeau_cheque créé à cet objet,
- *     tel que `article|3`
- * @param int $lier_trad
- *     Identifiant éventuel d'un cadeau_cheque source d'une traduction
- * @param string $config_fonc
- *     Nom de la fonction ajoutant des configurations particulières au formulaire
- * @param array $row
- *     Valeurs de la ligne SQL du cadeau_cheque, si connu
- * @param string $hidden
- *     Contenu HTML ajouté en même temps que les champs cachés du formulaire.
  * @return array
  *     Retours des traitements
  */
