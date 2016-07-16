@@ -10,15 +10,6 @@
  */
 
 if (!defined('_ECRIRE_INC_VERSION')) return;
-	
-
-/*
- * Un fichier de pipelines permet de regrouper
- * les fonctions de branchement de votre plugin
- * sur des pipelines existants.
- */
-
-
 
 /**
  * Ajout de contenu sur certaines pages,
@@ -53,7 +44,49 @@ function cheques_cadeau_affiche_milieu($flux) {
 	return $flux;
 }
 
+/**
+ * Ait lors de l’édition d’un élément éditorial, 
+ * lorsque l’utilisateur édite les champs ou change le statut de l’objet. 
+ * Il est appelé juste après l’enregistrement des données.
+ *
+ * @post_edition
+ * @param  array $flux Données du pipeline
+ * @return array       Données du pipeline
+ */
+function cheques_cadeau_post_edition($flux) {
+	$args = $flux['args'];
+	$data = $flux['data'];
 
+	if(
+			$args['action'] == 'instituer' 
+			and $args['table'] == 'spip_commandes' 
+			and $data['statut'] == 'paye'
+			and $id_commande = $args['id_objet']
+			and $email_beneficiaire = sql_getfetsel('email_beneficiaire',
+				'spip_commandes',
+				"id_commande=$id_commande AND source LIKE '%cheque_cadeau%'")
+			and $notifications = charger_fonction('notifications', 'inc', true)
+	) {
+		
+		
+		spip_log("email : $email_beneficiaire ", 'teste');
+		include_spip('inc/config');
+		$config = lire_config('commandes');
+		// Déterminer l'expéditeur
+		$options = array('destinataire' => $email_beneficiaire);
+		
+		if( $config['expediteur'] != "facteur" ) {
+			$options['expediteur'] = $config['expediteur_'.$config['expediteur']];
+		}
+
+		// Envoyer au beneficiaire
+		spip_log("traiter_notifications_commande : notification beneficiaire pour la commande $id_commande",'commandes.' . _LOG_INFO);
+		$notifications('commande_beneficiaire', $id_commande, $options);
+
+		// Si crédit enregistrer crédir à faveur du bénéficiaire
+	}
+	return $flux;
+}
 
 /**
  * Optimiser la base de données en supprimant les liens orphelins
