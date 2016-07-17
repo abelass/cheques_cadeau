@@ -51,7 +51,6 @@ function formulaires_commande_cheque_charger_dist($id_cadeau_cheque = '', $optio
 		'new_login' => _request('new_login'),
 	);
 	
-	$valeurs['_hidden'] .= '<input type="hidden" name="id_commande" value="' . $id_commande . '" />';
 	if ($id_cadeau_cheque) {
 		$valeurs['_hidden'] .= '<input type="hidden" name="id_cadeau_cheque" value="' . $id_cadeau_cheque . '" />';
 	}

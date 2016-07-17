@@ -6,13 +6,17 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
 $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	// C
+	'cheque_offert_par' => '@nom@ vous a offert un chèque cadeau (Référence : @reference@) au montant de @montant@ à utiliser sur @site@.',
 	'cheques_cadeau_titre' => 'Chèque cadeau',
+	'cheque_numero' => 'Chèque cadeau nr',
 	'cfg_exemple' => 'Exemple',
 	'cfg_exemple_explication' => 'Explication de cet exemple',
 	'cfg_titre_parametrages' => 'Paramétrages',
 	'commander_cheque_cadeau' => 'Commande de chèque cadeau',
+	'cordialmement' => 'Cordialement',
 	
 	// E
+	'equipe_de' => 'L\'equipe de',
 	'erreur_email_utilise' => 'Cette adresse email est déjà utilisé, veuillez vous connecter ou utliser une autre adresse',
 	'explication_login' => '<a rel="nofollow" class="login_modal" href="@url@" title="@titre_login@">Connectez-vous</a> si vous êtes déjà enregistré sur ce site',
 	'explication_message' => 'Message qui sera envoyé au bénificaire du chèque cadeau',
@@ -32,10 +36,14 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'legende_informations_cadeau' => 'Le cadeau',
 
 	// M
+	'message_de' => 'Message de',
 	'message_ok_cheque_commande' => 'Votre commande a bien été enregistré',
 
 	// T
 	'titre_page_configurer_cheques_cadeau' => 'Chèque cadeau',
+		
+	// V
+	'votre_cheque_sur' => 'Votre cheque cadeau sur @nom@'
 );
 
 ?>

@@ -1,0 +1,44 @@
+[(#REM)
+
+  Squelette
+  (c) 2009 SPIP
+  Distribue sous licence GPL
+
+]
+<BOUCLE_art(COMMANDES){id_commande}{statut?}{tout}>
+<body>
+	
+	<title>[#NOM_SITE_SPIP] <:cheque_cadeau:cheque_numero:> #REFERENCE</title>
+	
+	<BOUCLE_auteur(AUTEURS){id_auteur}{tout}>#SET{nom_client,#NOM}</BOUCLE_auteur><//B_contact>
+	
+	#SET{prix,#ARRAY}
+	<BOUCLE_commande_details(COMMANDES_DETAILS){id_commande}{par id_commandes_detail}>
+	#SET{prix,#GET{prix}|push{#PRIX*|mult{#QUANTITE}}}
+	</BOUCLE_commande_details>
+	#SET{total,#GET{prix}|array_sum|prix_formater}
+	<p><:commandes:bonjour:> #NOM_BENEFICIAIRE</p>
+	#SET{url_site,<a href="#URL_SITE_SPIP">#NOM_SITE_SPIP</a>}
+	<p><:cheques_cadeau:cheque_offert_par{
+		nom=#GET{nom_client},
+		site=#GET{url_site},
+		reference=#REFERENCE,
+		montant=#GET{total}
+		}:>
+	
+	[<div>
+		<p><:cheques_cadeau:message_de:> #GET{nom_client}</p>
+		<p>(#MESSAGE)</p>
+	</div>]
+	
+	<p><:cheques_cadeau:cordialmement:></p>
+	<p><:cheques_cadeau:equipe_de:> #NOM_SITE_SPIP</p>
+</body>
+</BOUCLE_art>
+
+[(#ENV{format_envoi}|=={plain}|oui)
+	#FILTRE{supprimer_tags|filtrer_entites|trim}]
+[(#ENV{format_envoi}|=={plain}|non)
+	#FILTRE{filtrer_entites|trim}]
+
+#FILTRE{facteur_email_wrap_to_html}

@@ -11,31 +11,6 @@
 
 if (!defined('_ECRIRE_INC_VERSION')) return;
 
-
-/**
- * agit lors de l’édition d’un élément éditorial, 
- * lorsque l’utilisateur édite les champs ou change le statut de l’objet. 
- * Il est appelé juste après l’enregistrement des données.
- *
- * @pipeline affiche_milieu
- * @param  array $flux Données du pipeline
- * @return array       Données du pipeline
- */
-function cheques_cadeau_post_edition($flux) {
-	
-	if (is_array($flux) and isset($flux['args']['type']) && $flux['args']['type'] == 'commande') {
-		if ($flux['data']['statut'] == 'paye' 
-				and $notifications = charger_fonction('notifications', 'inc', true)
-				and 
-				) {
-				$notifications('commande_client', $id_commande, $options);
-			
-		}
-	}
-	return $flux;
-}
->>>>>>> branch 'master' of git@github.com:abelass/cheques_cadeau.git
-
 /**
  * Ajout de contenu sur certaines pages,
  * notamment des formulaires de liaisons entre objets
@@ -87,23 +62,22 @@ function cheques_cadeau_post_edition($flux) {
 			and $args['table'] == 'spip_commandes' 
 			and $data['statut'] == 'paye'
 			and $id_commande = $args['id_objet']
-			and $email_beneficiaire = sql_getfetsel('email_beneficiaire',
+			and $source = sql_getfetsel('source',
 				'spip_commandes',
 				"id_commande=$id_commande AND source LIKE '%cheque_cadeau%'")
 			and $notifications = charger_fonction('notifications', 'inc', true)
 	) {
 		
-		
-		spip_log("email : $email_beneficiaire ", 'teste');
 		include_spip('inc/config');
 		$config = lire_config('commandes');
 		// Déterminer l'expéditeur
-		$options = array('destinataire' => $email_beneficiaire);
+		$options = array();
 		
 		if( $config['expediteur'] != "facteur" ) {
 			$options['expediteur'] = $config['expediteur_'.$config['expediteur']];
 		}
-
+		spip_log($options,'teste');
+		
 		// Envoyer au beneficiaire
 		spip_log("traiter_notifications_commande : notification beneficiaire pour la commande $id_commande",'commandes.' . _LOG_INFO);
 		$notifications('commande_beneficiaire', $id_commande, $options);
