@@ -162,6 +162,7 @@ function formulaires_commande_cheque_verifier_dist($id_cadeau_cheque, $options=a
  */
 function formulaires_commande_cheque_traiter_dist($id_cadeau_cheque, $options=array(), $retour=''){
 	include_spip('inc/session');
+	include_spip('inc/editer');
 	include_spip('action/editer_objet');
 	include_spip('action/commandes_cheques');
 	include_spip('inc/commandes');

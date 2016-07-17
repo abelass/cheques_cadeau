@@ -11,7 +11,7 @@
 					<h3 class="legend">
 					<span><:cheques_cadeau:legende_coordonnees:></span>
 					</h3>
-					[(#ID_AUTEUR|oui)
+					[(#SESSION{id_auteur}|oui)
 						[(#SAISIE{input,nom,
 							disable=oui,
 							label=<:cheques_cadeau:label_nom:>})]
@@ -19,7 +19,7 @@
 							disable=oui,
 							label=<:cheques_cadeau:label_email:>})]
 					]
-					[(#ID_AUTEUR|non)
+					[(#SESSION{id_auteur}|non)
 						#SET{url,#URL_PAGE{login}|parametre_url{url,#SELF}}
 						[(#SET{titre_login,<:lien_connecter:>})]
 						<strong class="explication"><:cheques_cadeau:explication_login{url=#GET{url},titre_login=#GET{titre_login}}:></strong>
