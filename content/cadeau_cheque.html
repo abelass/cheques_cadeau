@@ -1,0 +1,19 @@
+<BOUCLE_content(CADEAU_CHEQUES){id_cadeau_cheque}>
+<article>
+	<header class="cartouche">
+		[(#LOGO_CADEAU_CHEQUE|image_reduire{200,200})]
+		<h1><span class="#EDIT{titre}">#TITRE</span></h1>
+	</header>
+
+	<div class="main">
+		[<div class="#EDIT{texte} texte surlignable">(#DESCRIPTIF|adaptive_images)</div>]
+	</div>
+
+	<aside>
+		<div class="ajax">
+		#FORMULAIRE_COMMANDE_CHEQUE{#ID_CADEAU_CHEQUE}
+		</div>
+	</aside>
+
+</article>
+</BOUCLE_content>
