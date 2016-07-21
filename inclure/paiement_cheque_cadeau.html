@@ -1,0 +1,31 @@
+<BOUCLE_commande(COMMANDES){id_commande}{tout}>
+	#SET{reference,#REFERENCE}
+	<BOUCLE_auteur(AUTEURS){id_auteur}{tout}>
+		#SET{email,#EMAIL|sinon{#INFO_EMAIL{auteur,#ID_AUTEUR}}}
+	</BOUCLE_auteur>
+
+	#SET{id_commande,#ID_COMMANDE}
+	#SET{taxe, #ARRAY}
+	#SET{prix_unitaire_ht, #ARRAY}
+	<BOUCLE_commande_details(COMMANDES_DETAILS){id_commande}{tout}>
+	#PRIX_UNITAIRE_HT
+		#SET{prix_unitaire_ht,#GET{prix_unitaire_ht}|push{#PRIX_UNITAIRE_HT*|mult{#QUANTITE}}}
+		#SET{taxe,#GET{taxe}|push{#TAXE|mult{#QUANTITE}}}
+		</BOUCLE_commande_details>
+		#SET{total_taxe,#GET{taxe}|array_sum}
+		#SET{montant_ht,#GET{prix_unitaire_ht}|array_sum}
+		#SET{montant,#GET{montant_ht}|plus{#GET{total_taxe}}
+		</B_commande_details>
+</BOUCLE_commande>
+#SET{options,#ARRAY{
+		montant_ht,#GET{montant_ht},
+		auteur,#GET{email},
+		id_commande,#GET{id_commande},
+		tracking_id,#GET{reference}
+	}
+}
+
+#GET{montant}
+
+[(#REM) Affiche le formulaire Paiement de Bank]
+[(#FORMULAIRE_PAYER_ACTE{#GET{montant},#GET{options}})]

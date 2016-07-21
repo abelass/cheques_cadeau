@@ -192,8 +192,7 @@ function formulaires_commande_cheque_traiter_dist($id_cadeau_cheque, $options=ar
 	}
 	
 	$id_commande = creer_commande_encours();
-	
-	// et la remplir les details de la commande d'après le panier en session
+
 	
 	// Enregistrer les informations de la commande.
 	objet_modifier('commande', $id_commande, array(
@@ -208,11 +207,12 @@ function formulaires_commande_cheque_traiter_dist($id_cadeau_cheque, $options=ar
 	$res['message_ok'] = _T('cheques_cadeau:message_ok_cheque_commande');
 	$res['message_ok'] .= recuperer_fond('inclure/commande',array('id_commande' => $id_commande));
 	
-	
-	// Un lien a prendre en compte ?
-	/*if (isset($res['redirect'])) {
-		$res['redirect'] = parametre_url ($res['redirect'], "id_lien_ajoute", $id_commande, '&');
-	}*/
-	return $res;
 
+	if (test_plugin_actif('bank') and !$cacher_paiement_public = lire_config('reservation_bank/cacher_paiement_public') ) {
+		$res['message_ok'] .= recuperer_fond('inclure/paiement_cheque_cadeau', array(
+			'id_commande' => $id_commande,
+		));
+	}
+
+	return $res;
 }
