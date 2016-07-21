@@ -66,7 +66,7 @@ function cheques_cadeau_post_edition($flux) {
 			and $args['table'] == 'spip_commandes' 
 			and $data['statut'] == 'paye' 
 			and $id_commande = $args['id_objet'] 
-			and $beneficiaire = sql_getfetsel('email_beneficiaire', 'spip_commandes', "id_commande=$id_commande AND source LIKE '%cheque_cadeau%'") and $notifications = charger_fonction('notifications', 'inc', true)) {
+			and $email_beneficiaire = sql_getfetsel('email_beneficiaire', 'spip_commandes', "id_commande=$id_commande AND source LIKE '%cheque_cadeau%'") and $notifications = charger_fonction('notifications', 'inc', true)) {
 		
 		include_spip('inc/config');
 		$config = lire_config('commandes');
