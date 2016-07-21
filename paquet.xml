@@ -2,7 +2,7 @@
 	prefix="cheques_cadeau"
 	categorie="communication"
 	version="1.0.1"
-	etat="dev"
+	etat="test"
 	compatibilite="[3.0.22;3.1.*]"
 	logo="prive/themes/spip/images/cheques_cadeau-64.png"
 	documentation=""
