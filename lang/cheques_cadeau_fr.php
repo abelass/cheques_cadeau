@@ -38,6 +38,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	// M
 	'message_de' => 'Message de',
 	'message_ok_cheque_commande' => 'Votre commande a bien été enregistré',
+	'mouvement_cadeau' => 'Chèque cadeau @titre@',
 
 	// T
 	'titre_page_configurer_cheques_cadeau' => 'Chèque cadeau',
