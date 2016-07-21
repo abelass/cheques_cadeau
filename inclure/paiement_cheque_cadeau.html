@@ -3,7 +3,7 @@
 	<BOUCLE_auteur(AUTEURS){id_auteur}{tout}>
 		#SET{email,#EMAIL|sinon{#INFO_EMAIL{auteur,#ID_AUTEUR}}}
 	</BOUCLE_auteur>
-	
+
 	#SET{id_commande,#ID_COMMANDE}
 	#SET{taxe, #ARRAY}
 	#SET{prix_unitaire_ht, #ARRAY}
