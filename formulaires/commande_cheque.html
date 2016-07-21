@@ -5,76 +5,82 @@
 	<form method='post' action='#ENV{action}'><div>
 		#ACTION_FORMULAIRE{#ENV{action}}
 		<h2><:cheques_cadeau:commander_cheque_cadeau:></h2>
-		<div class="editer_groupe">
-			<div class="fieldset fieldset_fieldset_coordonnees">
+		<ul class="editer_groupe">
+			<li class="fieldset fieldset_fieldset_coordonnees">
 				<fieldset>
 					<h3 class="legend">
 					<span><:cheques_cadeau:legende_coordonnees:></span>
 					</h3>
-					[(#SESSION{id_auteur}|oui)
-						[(#SAISIE{input,nom,
-							disable=oui,
-							label=<:cheques_cadeau:label_nom:>})]
-						[(#SAISIE{email,email,
-							disable=oui,
-							label=<:cheques_cadeau:label_email:>})]
-					]
-					[(#SESSION{id_auteur}|non)
-						#SET{url,#URL_PAGE{login}|parametre_url{url,#SELF}}
-						[(#SET{titre_login,<:lien_connecter:>})]
-						<strong class="explication"><:cheques_cadeau:explication_login{url=#GET{url},titre_login=#GET{titre_login}}:></strong>
-						[(#SAISIE{input,nom,
-							obligatoire=oui,
-							label=<:cheques_cadeau:label_nom:>})]
-						[(#SAISIE{email,email,
-							obligatoire=oui,
-							label=<:cheques_cadeau:label_email:>})]
-						[(#SAISIE{input,new_login,
-							label=<:item_login:>,
-							obligatoire=#GET{obligatoire}
-						})]
-						[(#SAISIE{input,#ENV{name_new_pass,new_pass},
-							type="password",
-							label=<:cheques_cadeau:label_mot_passe:>,
-							obligatoire=#GET{obligatoire},
-							class=password,explication=<:info_plus_cinq_car:>
-						})]
-						[(#SAISIE{input,#ENV{name_new_pass2,new_pass2},
-							type="password",
-							label=<:cheques_cadeau:label_mot_passe2:>,
-							obligatoire=#GET{obligatoire},
-							class=password
-						})]
-					]
+					<ul class="editer_groupe">
+						[(#ID_AUTEUR|oui)
+							[(#SAISIE{input,nom,
+								disable=oui,
+								label=<:cheques_cadeau:label_nom:>})]
+							[(#SAISIE{email,email,
+								disable=oui,
+								label=<:cheques_cadeau:label_email:>})]
+						]
+						[(#ID_AUTEUR|non)
+							#SET{url,#URL_PAGE{login}|parametre_url{url,#SELF}}
+							[(#SET{titre_login,<:lien_connecter:>})]
+							<strong class="explication"><:cheques_cadeau:explication_login{url=#GET{url},titre_login=#GET{titre_login}}:></strong>
+							[(#SAISIE{input,nom,
+								obligatoire=oui,
+								label=<:cheques_cadeau:label_nom:>})]
+							[(#SAISIE{email,email,
+								obligatoire=oui,
+								label=<:cheques_cadeau:label_email:>})]
+							[(#SAISIE{input,new_login,
+								label=<:item_login:>,
+								obligatoire=#GET{obligatoire}
+							})]
+							[(#SAISIE{input,#ENV{name_new_pass,new_pass},
+								type="password",
+								label=<:cheques_cadeau:label_mot_passe:>,
+								obligatoire=#GET{obligatoire},
+								class=password,explication=<:info_plus_cinq_car:>
+							})]
+							[(#SAISIE{input,#ENV{name_new_pass2,new_pass2},
+								type="password",
+								label=<:cheques_cadeau:label_mot_passe2:>,
+								obligatoire=#GET{obligatoire},
+								class=password
+							})]
+						]
+					</ul>
 				</fieldset>
-			</div>
-			<div class="fieldset fieldset_fieldset_informations_beneficiaire">
+			</li>
+			<li class="fieldset fieldset_fieldset_informations_beneficiaire">
 				<h3 class="legend">
 					<span><:cheques_cadeau:legende_informations_beneficiaire:></span>
 				</h3>
-				[(#SAISIE{input,nom_beneficiaire,
-					obligatoire=oui,
-					label=<:cheques_cadeau:label_nom_beneficiaire:>})]
-				[(#SAISIE{email,email_beneficiaire,
-					obligatoire=oui,
-					label=<:cheques_cadeau:label_email_beneficiaire:>})]
-				</div>
-			<div class="fieldset fieldset_fieldset_montant">
+				<fieldset>
+					<ul class="editer_groupe">
+						[(#SAISIE{input,nom_beneficiaire,
+							obligatoire=oui,
+							label=<:cheques_cadeau:label_nom_beneficiaire:>})]
+						[(#SAISIE{email,email_beneficiaire,
+							obligatoire=oui,
+							label=<:cheques_cadeau:label_email_beneficiaire:>})]
+					</ul>
+				</fieldset>
+			</li>
+			<li class="fieldset fieldset_fieldset_montant">
 				<fieldset>
 					<h3 class="legend">
 					<span><:cheques_cadeau:legende_informations_cadeau:></span>
 					</h3>
-					[(#SAISIE{input,montant,
-						obligatoire=oui,
-						label=<:cheques_cadeau:label_montant:>})]
-					[(#SAISIE{textarea,message,
-					label=<:cheques_cadeau:label_message:>,
-					explication=<:cheques_cadeau:explication_message:>})]
-			</div>
-
+					<ul class="editer_groupe">
+						[(#SAISIE{input,montant,
+							obligatoire=oui,
+							label=<:cheques_cadeau:label_montant:>})]
+						[(#SAISIE{textarea,message,
+						label=<:cheques_cadeau:label_message:>,
+						explication=<:cheques_cadeau:explication_message:>})]
+					</ul>
 				</fieldset>
-			</div>
-		</div>
+			</li>
+		</ul>
 		[(#REM) ajouter les saisies supplementaires : extra et autre, a cet endroit ]
 		<!--extra-->
 		<p class="boutons"><input type='submit' class='submit' value='<:bouton_enregistrer:>' /></p>
