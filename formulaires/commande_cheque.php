@@ -27,11 +27,11 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  */
 function formulaires_commande_cheque_charger_dist($id_cadeau_cheque = '', $options=array(), $retour=''){
 	include_spip('inc/session');
-	
+
 	if ($id_auteur = session_get('id_auteur')) {
 		$auteur = sql_fetsel('nom,email', 'spip_auteurs', 'id_auteur=' . $id_auteur);
 	}
-	
+
 	$valeurs = array(
 		'id_commande' => $id_commande,
 		'nom' => _request('nom') ? _request('nom') : (
@@ -50,11 +50,11 @@ function formulaires_commande_cheque_charger_dist($id_cadeau_cheque = '', $optio
 		'new_pass' => _request('new_pass'),
 		'new_login' => _request('new_login'),
 	);
-	
+
 	if ($id_cadeau_cheque) {
 		$valeurs['_hidden'] .= '<input type="hidden" name="id_cadeau_cheque" value="' . $id_cadeau_cheque . '" />';
 	}
-	
+
 	return $valeurs;
 }
 
@@ -75,14 +75,14 @@ function formulaires_commande_cheque_charger_dist($id_cadeau_cheque = '', $optio
 function formulaires_commande_cheque_verifier_dist($id_cadeau_cheque, $options=array(), $retour=''){
 	include_spip('inc/session');
 	$verifier = charger_fonction('verifier', 'inc/');
-	
+
 	// Les champs obligatoires.
 	$obligatoires = array(
 		'montant',
 		'nom_beneficiaire',
 		'email_beneficiaire',
 	);
-	
+
 	if (!$id_auteur = session_get('id_auteur')) {
 		$obligatoires = array_merge($obligatoires,array(
 			'nom',
@@ -91,13 +91,13 @@ function formulaires_commande_cheque_verifier_dist($id_cadeau_cheque, $options=a
 			'new_login'
 		));
 		include_spip('inc/auth');
-		
+
 		//Vérifier le login
 		if ($err = auth_verifier_login($auth_methode, _request('new_login'), $id_auteur)) {
 			$erreurs['new_login'] = $err;
 			$erreurs['message_erreur'] .= $err;
 		}
-		
+
 		//Vérifier les mp
 		if ($p = _request('new_pass')) {
 			if ($p != _request('new_pass2')) {
@@ -109,15 +109,15 @@ function formulaires_commande_cheque_verifier_dist($id_cadeau_cheque, $options=a
 			}
 		}
 	}
-	
+
 	$erreurs = array();
 	foreach ($obligatoires AS $champ) {
 		if (!_request($champ))
 			$erreurs[$champ] = _T("info_obligatoire");
 	}
-	
+
 	// Vérficiations spécifiques.
-	
+
 	// Les mails
 	$emails = array('email', 'email_beneficiaire');
 	foreach ($emails as $champ) {
@@ -131,7 +131,7 @@ function formulaires_commande_cheque_verifier_dist($id_cadeau_cheque, $options=a
 			$erreurs['email'] = _T('cheques_cadeau:erreur_email_utilise');
 		}
 	}
-	
+
 	// le montant
 	if ($montant = _request('montant') AND $erreur = $verifier($montant, 'entier')){
 		$erreurs['montant'] = $erreur;
@@ -139,7 +139,7 @@ function formulaires_commande_cheque_verifier_dist($id_cadeau_cheque, $options=a
 	/* AUTEUR
 	 * Si pas connecté on teste sur l'email, si présent on popose login, sinon login et mot de passe pour enregistrer
 	 */
-	
+
 	return $erreurs;
 
 }
@@ -166,7 +166,7 @@ function formulaires_commande_cheque_traiter_dist($id_cadeau_cheque, $options=ar
 	include_spip('action/editer_objet');
 	include_spip('action/commandes_cheques');
 	include_spip('inc/commandes');
-	
+
 	// Créer un compte si nécessaire.
 	if (!$id_auteur = session_get('id_auteur')) {
 		$res = formulaires_editer_objet_traiter (
@@ -186,14 +186,14 @@ function formulaires_commande_cheque_traiter_dist($id_cadeau_cheque, $options=ar
 				'id_auteur=' . $id_auteur
 				);
 				$auteur = sql_fetsel( '*', 'spip_auteurs', 'id_auteur=' . $id_auteur );
-				
+
 				// Se loguer qvec le nouveau compte.
 				auth_loger($auteur);
 	}
-	
+
 	$id_commande = creer_commande_encours();
 
-	
+
 	// Enregistrer les informations de la commande.
 	objet_modifier('commande', $id_commande, array(
 			'statut' => 'attente',
@@ -202,14 +202,14 @@ function formulaires_commande_cheque_traiter_dist($id_cadeau_cheque, $options=ar
 			'message' =>_request('message'),
 		)
 	);
-	
+
 	cheques_remplir_commande($id_commande, $id_cadeau_cheque, $options, false);
 	$res['message_ok'] = _T('cheques_cadeau:message_ok_cheque_commande');
 	$res['message_ok'] .= recuperer_fond('inclure/commande',array('id_commande' => $id_commande));
-	
+
 
 	if (test_plugin_actif('bank') and !$cacher_paiement_public = lire_config('reservation_bank/cacher_paiement_public') ) {
-		$res['message_ok'] .= recuperer_fond('inclure/paiement_cheque_cadeau', array(
+		$res['message_ok'] .= recuperer_fond('inclure/paiement_commande', array(
 			'id_commande' => $id_commande,
 		));
 	}
