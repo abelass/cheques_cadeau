@@ -187,7 +187,7 @@ function formulaires_commande_cheque_traiter_dist($id_cadeau_cheque, $options=ar
 				);
 				$auteur = sql_fetsel( '*', 'spip_auteurs', 'id_auteur=' . $id_auteur );
 
-				// Se loguer qvec le nouveau compte.
+				// Se loguer avec le nouveau compte.
 				auth_loger($auteur);
 	}
 

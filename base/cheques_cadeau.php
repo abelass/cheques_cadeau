@@ -130,12 +130,12 @@ function cheques_cadeau_declarer_champs_extras($champs = array()) {
 				'label' => _T('cheques_cadeau:label_nom_beneficiaire'),
 				'sql' => "varchar(255) NOT NULL DEFAULT ''",
 				'versionner' => true,
-				'restrictions' => array('voir' => array('auteur' => ''),//Tout le monde peut voir
-					'modifier' => array('auteur' => 'admin')),//Seuls les webmestres peuvent modifier
+				'restrictions' => array('voir' => array('auteur' => ''),
+					'modifier' => array('auteur' => 'admin')),
 			),
 		),
 		'email_beneficiaire' => array(
-			'saisie' => 'email',//Type du champ (voir plugin Saisies)
+			'saisie' => 'email',
 			'options' => array(
 				'nom' => 'email_beneficiaire',
 				'label' => _T('cheques_cadeau:label_email_beneficiaire'),
@@ -144,12 +144,12 @@ function cheques_cadeau_declarer_champs_extras($champs = array()) {
 				'verifier' => array(
 					'type' => 'email',
 				),
-				'restrictions' => array('voir' => array('auteur' => ''),//Tout le monde peut voir
-					'modifier' => array('auteur' => 'admin')),//Seuls les webmestres peuvent modifier
+				'restrictions' => array('voir' => array('auteur' => ''),
+					'modifier' => array('auteur' => 'admin')),
 			),
 		),
 		'message' => array(
-			'saisie' => 'textarea',//Type du champ (voir plugin Saisies)
+			'saisie' => 'textarea',
 			'options' => array(
 				'nom' => 'message',
 				'label' => _T('cheques_cadeau:label_message'),
@@ -158,8 +158,8 @@ function cheques_cadeau_declarer_champs_extras($champs = array()) {
 				'verifier' => array(
 					'type' => 'email',
 				),
-				'restrictions'=>array('voir' => array('auteur' => ''),//Tout le monde peut voir
-					'modifier' => array('auteur' => 'admin')),//Seuls les webmestres peuvent modifier
+				'restrictions'=>array('voir' => array('auteur' => ''),
+					'modifier' => array('auteur' => 'admin')),
 			),
 		),
 	);

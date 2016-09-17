@@ -8,7 +8,6 @@
 	#SET{taxe, #ARRAY}
 	#SET{prix_unitaire_ht, #ARRAY}
 	<BOUCLE_commande_details(COMMANDES_DETAILS){id_commande}{tout}>
-	#PRIX_UNITAIRE_HT
 		#SET{prix_unitaire_ht,#GET{prix_unitaire_ht}|push{#PRIX_UNITAIRE_HT*|mult{#QUANTITE}}}
 		#SET{taxe,#GET{taxe}|push{#TAXE|mult{#QUANTITE}}}
 		</BOUCLE_commande_details>
@@ -24,8 +23,6 @@
 		tracking_id,#GET{reference}
 	}
 }
-
-#GET{montant}
 
 [(#REM) Affiche le formulaire Paiement de Bank]
 [(#FORMULAIRE_PAYER_ACTE{#GET{montant},#GET{options}})]
