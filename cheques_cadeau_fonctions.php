@@ -12,12 +12,13 @@
 if (!defined('_ECRIRE_INC_VERSION')) return;
 
 
-/*
- * Un fichier de fonctions permet de définir des éléments
- * systématiquement chargés lors du calcul des squelettes.
- *
- * Il peut par exemple définir des filtres, critères, balises, …
- * 
- */
-
-?>
+function cheques_cadeau_devise_defaut() {
+	if (function_exists('prix_objets_devise_defaut')) {
+		$devise_defaut = prix_objets_devise_defaut();
+	}
+	else {
+		$devise_defaut = 'EUR';
+	}
+	
+	return $devise_defaut;
+}

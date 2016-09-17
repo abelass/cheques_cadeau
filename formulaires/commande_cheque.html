@@ -73,7 +73,7 @@
 					<ul class="editer_groupe">
 						[(#SAISIE{input,montant,
 							obligatoire=oui,
-							label=<:cheques_cadeau:label_montant:>})]
+							label=<:cheques_cadeau:label_montant{devise=#DEVISE}:>})]
 						[(#SAISIE{textarea,message,
 						label=<:cheques_cadeau:label_message:>,
 						explication=<:cheques_cadeau:explication_message:>})]

@@ -49,6 +49,7 @@ function formulaires_commande_cheque_charger_dist($id_cadeau_cheque = '', $optio
 		'message' => _request('message'),
 		'new_pass' => _request('new_pass'),
 		'new_login' => _request('new_login'),
+		'devise' => cheques_cadeau_devise_defaut(),
 	);
 
 	if ($id_cadeau_cheque) {
