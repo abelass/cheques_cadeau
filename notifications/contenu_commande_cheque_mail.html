@@ -7,11 +7,11 @@
 ]
 <BOUCLE_art(COMMANDES){id_commande}{statut?}{tout}>
 <body>
-	
+
 	<title>[#NOM_SITE_SPIP] <:cheque_cadeau:cheque_numero:> #REFERENCE</title>
-	
+
 	<BOUCLE_auteur(AUTEURS){id_auteur}{tout}>#SET{nom_client,#NOM}</BOUCLE_auteur><//B_contact>
-	
+
 	#SET{prix,#ARRAY}
 	<BOUCLE_commande_details(COMMANDES_DETAILS){id_commande}{par id_commandes_detail}>
 	#SET{prix,#GET{prix}|push{#PRIX*|mult{#QUANTITE}}}
@@ -19,20 +19,22 @@
 	#SET{total,#GET{prix}|array_sum|prix_formater}
 	<p><:commandes:bonjour:> #NOM_BENEFICIAIRE</p>
 	#SET{url_site,<a href="#URL_SITE_SPIP">#NOM_SITE_SPIP</a>}
-	<p><:cheques_cadeau:cheque_offert_par{
+	<p class="details"><:cheques_cadeau:cheque_offert_par{
 		nom=#GET{nom_client},
 		site=#GET{url_site},
 		reference=#REFERENCE,
 		montant=#GET{total}
 		}:>
-	
-	[<div>
+
+	[<div class="message">
 		<p><:cheques_cadeau:message_de:> #GET{nom_client}</p>
 		<p>(#MESSAGE)</p>
 	</div>]
-	
-	<p><:cheques_cadeau:cordialmement:></p>
-	<p><:cheques_cadeau:equipe_de:> #NOM_SITE_SPIP</p>
+
+	<div class="farewell">
+		<p><:cheques_cadeau:cordialmement:></p>
+		<p><:cheques_cadeau:equipe_de:> #NOM_SITE_SPIP</p>
+	</div>
 </body>
 </BOUCLE_art>
 
