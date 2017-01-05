@@ -22,7 +22,7 @@ include_spip('base/cheques_cadeau');
  * - créer la structure SQL,
  * - insérer du pre-contenu,
  * - installer des valeurs de configuration,
- * - mettre à jour la structure SQL 
+ * - mettre à jour la structure SQL
  *
  * @param string $nom_meta_base_version
  *     Nom de la meta informant de la version du schéma de données du plugin installé dans SPIP
@@ -37,21 +37,21 @@ function cheques_cadeau_upgrade($nom_meta_base_version, $version_cible) {
 	cextras_api_upgrade(cheques_cadeau_declarer_champs_extras(), $maj['create']);
 	// Installer les tables nécessaires
 	$maj['create'][] = array('maj_tables', array('spip_cadeau_cheques', 'spip_cadeau_cheques_liens'));
+	$maj['1.0.1'][] = array('maj_tables', array('spip_cadeau_cheques'));
 
-	
 	include_spip('base/upgrade');
-	
+
 	maj_plugin($nom_meta_base_version, $version_cible, $maj);
 
 }
 
 /**
  * Fonction de désinstallation du plugin Chèque cadeau.
- * 
+ *
  * Vous devez :
  *
  * - nettoyer toutes les données ajoutées par le plugin et son utilisation
- * - supprimer les tables et les champs créés par le plugin. 
+ * - supprimer les tables et les champs créés par le plugin.
  *
  * @param string $nom_meta_base_version
  *     Nom de la meta informant de la version du schéma de données du plugin installé dans SPIP
@@ -66,7 +66,7 @@ function cheques_cadeau_vider_tables($nom_meta_base_version) {
 	sql_delete("spip_versions",              sql_in("objet", array('cadeau_cheque')));
 	sql_delete("spip_versions_fragments",    sql_in("objet", array('cadeau_cheque')));
 	sql_delete("spip_forum",                 sql_in("objet", array('cadeau_cheque')));
-	
+
 	// Eliminer les champs extras.
 	cextras_api_vider_tables(cheques_cadeau_declarer_champs_extras());
 

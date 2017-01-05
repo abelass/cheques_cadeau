@@ -11,6 +11,9 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	// C
 	'champ_descriptif_label' => 'Déscriptif',
+	'champ_message_notification_explication' => 'Message ajouté à la notification envoyé au n',
+	'champ_message_notification_label' => 'Message notification',
+
 	'champ_titre_label' => 'Titre',
 
 	// I

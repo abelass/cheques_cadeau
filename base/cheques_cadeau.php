@@ -42,24 +42,25 @@ function cheques_cadeau_declarer_tables_objets_sql($tables) {
 
 	$tables['spip_cadeau_cheques'] = array(
 		'type' => 'cadeau_cheque',
-		'principale' => "oui", 
-		'table_objet_surnoms' => array('cadeaucheque'), // table_objet('cadeau_cheque') => 'cadeau_cheques' 
+		'principale' => "oui",
+		'table_objet_surnoms' => array('cadeaucheque'), // table_objet('cadeau_cheque') => 'cadeau_cheques'
 		'field'=> array(
 			"id_cadeau_cheque"   => "bigint(21) NOT NULL",
 			"titre"              => "varchar(255) NOT NULL DEFAULT ''",
 			"descriptif"         => "text NOT NULL DEFAULT ''",
-			"date"               => "datetime NOT NULL DEFAULT '0000-00-00 00:00:00'", 
-			"statut"             => "varchar(20)  DEFAULT '0' NOT NULL", 
+			"message_notification" => "text NOT NULL DEFAULT ''",
+			"date"               => "datetime NOT NULL DEFAULT '0000-00-00 00:00:00'",
+			"statut"             => "varchar(20)  DEFAULT '0' NOT NULL",
 			"maj"                => "TIMESTAMP"
 		),
 		'key' => array(
 			"PRIMARY KEY"        => "id_cadeau_cheque",
-			"KEY statut"         => "statut", 
+			"KEY statut"         => "statut",
 		),
 		'titre' => "titre AS titre, '' AS lang",
 		'date' => "date",
-		'champs_editables'  => array('titre', 'descriptif'),
-		'champs_versionnes' => array('titre', 'descriptif'),
+		'champs_editables'  => array('titre', 'descriptif', 'message_notification'),
+		'champs_versionnes' => array('titre', 'descriptif', 'message_notification'),
 		'rechercher_champs' => array("titre" => 8),
 		'tables_jointures'  => array('spip_cadeau_cheques_liens'),
 		'statut_textes_instituer' => array(
@@ -74,12 +75,12 @@ function cheques_cadeau_declarer_tables_objets_sql($tables) {
 				'champ'     => 'statut',
 				'publie'    => 'publie',
 				'previsu'   => 'publie,prop,prepa',
-				'post_date' => 'date', 
+				'post_date' => 'date',
 				'exception' => array('statut','tout')
 			)
 		),
-		'texte_changer_statut' => 'cadeau_cheque:texte_changer_statut_cadeau_cheque', 
-		
+		'texte_changer_statut' => 'cadeau_cheque:texte_changer_statut_cadeau_cheque',
+
 
 	);
 
@@ -116,7 +117,7 @@ function cheques_cadeau_declarer_tables_auxiliaires($tables) {
 
 /**
  * Déclaration des champs extras
- * 
+ *
  * @pipeline declarer_champs_extras
  * @param array $champs
  *     Description des champs
