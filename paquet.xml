@@ -6,16 +6,16 @@
 	compatibilite="[3.0.22;3.1.*]"
 	logo="prive/themes/spip/images/cheques_cadeau-64.png"
 	documentation=""
-	schema="1.0.0" 
+	schema="1.0.0"
 >
 	<!--
 		Paquet genere le 2016-04-30 13:42:41
-		(Vous pouvez bien entendu supprimer ces commentaires) 
+		(Vous pouvez bien entendu supprimer ces commentaires)
 	-->
 
 	<nom>Chèque cadeau</nom>
 
-	<!-- cette balise peut etre presente plusieurs fois s'il y a plusieurs auteurs --> 
+	<!-- cette balise peut etre presente plusieurs fois s'il y a plusieurs auteurs -->
 	<auteur lien='http://websimple.be'>rainer</auteur>
 
 	<licence>GNU/GPL</licence>
@@ -26,19 +26,18 @@
 	<necessite nom="verifier"  compatibilite="[1.0.9;]" />
 	<necessite nom="notifavancees"  compatibilite="[0.3.3;]" />
 
-	<pipeline nom="autoriser" inclure="cheques_cadeau_autorisations.php" /> 
+	<pipeline nom="autoriser" inclure="cheques_cadeau_autorisations.php" />
 
-	<pipeline nom="declarer_tables_objets_sql" inclure="base/cheques_cadeau.php" /> 
-	<pipeline nom="declarer_tables_interfaces" inclure="base/cheques_cadeau.php" /> 
-	<pipeline nom="declarer_tables_auxiliaires" inclure="base/cheques_cadeau.php" /> 
+	<pipeline nom="declarer_tables_objets_sql" inclure="base/cheques_cadeau.php" />
+	<pipeline nom="declarer_tables_interfaces" inclure="base/cheques_cadeau.php" />
+	<pipeline nom="declarer_tables_auxiliaires" inclure="base/cheques_cadeau.php" />
 	<pipeline nom="declarer_champs_extras" inclure="base/cheques_cadeau.php" />
-	
-	<pipeline nom="affiche_milieu" inclure="cheques_cadeau_pipelines.php" /> 
+
+	<pipeline nom="affiche_milieu" inclure="cheques_cadeau_pipelines.php" />
 	<pipeline nom="optimiser_base_disparus" inclure="cheques_cadeau_pipelines.php" />
 	<pipeline nom="declarer_champs_extras" inclure="base/cheques_cadeau.php" />
 	<pipeline nom="post_edition" inclure="cheques_cadeau_pipelines.php" />
 
 
-	<menu nom="cadeau_cheques" titre="cadeau_cheque:titre_cadeau_cheques" parent="menu_edition" icone="images/cadeau_cheque-16.png" action="cadeau_cheques" /> 
-	<menu nom="cadeau_cheque_creer" titre="cadeau_cheque:icone_creer_cadeau_cheque" parent="outils_rapides" icone="images/cadeau_cheque-new-16.png" action="cadeau_cheque_edit" parametres="new=oui" /> 
+	<menu nom="cadeau_cheques" titre="cadeau_cheque:titre_cadeau_cheques" parent="menu_edition" icone="images/cadeau_cheque-16.png" action="cadeau_cheques" />
 </paquet>
