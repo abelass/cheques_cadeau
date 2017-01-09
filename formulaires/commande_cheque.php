@@ -50,12 +50,14 @@ function formulaires_commande_cheque_charger_dist($id_cadeau_cheque = '', $optio
 		'new_pass' => _request('new_pass'),
 		'new_login' => _request('new_login'),
 		'devise' => cheques_cadeau_devise_defaut(),
+		'statut' => 'encours'
 	);
 
 	if ($id_cadeau_cheque) {
 		$valeurs['_hidden'] .= '<input type="hidden" name="id_cadeau_cheque" value="' . $id_cadeau_cheque . '" />';
 	}
 
+	$valeurs['_hidden'] .= '<input type="hidden" name="statut" value="' . $valeurs['statut'] . '" />';
 	return $valeurs;
 }
 
@@ -197,7 +199,7 @@ function formulaires_commande_cheque_traiter_dist($id_cadeau_cheque, $options=ar
 
 	// Enregistrer les informations de la commande.
 	objet_modifier('commande', $id_commande, array(
-			'statut' => 'attente',
+			'statut' => _request('statut'),
 			'nom_beneficiaire' =>_request('nom_beneficiaire'),
 			'email_beneficiaire' =>_request('email_beneficiaire'),
 			'message' =>_request('message'),
