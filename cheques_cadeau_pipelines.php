@@ -95,6 +95,7 @@ function cheques_cadeau_post_edition($flux) {
 					'spip_commandes_details',
 					'id_commande=' . $id_commande);
 
+			$montant = array();
 			while ( $data = sql_fetch($sql) ) {
 				set_request('id_objet', $data['id_commandes_detail']);
 				set_request('objet', 'commande');
@@ -102,8 +103,10 @@ function cheques_cadeau_post_edition($flux) {
 							'titre' => $data['descriptif']
 						)));
 				// On établit le montant
-				set_request('montant', $data['prix_unitaire_ht'] + $data['taxe']);
+				$montant[] = $data['prix_unitaire_ht'] + $data['taxe'];
 			}
+			set_request('montant', array_sum($montant));
+
 			// Création du crédit
 			$action('new', 'reservation_credit_mouvement');
 		}
