@@ -15,6 +15,8 @@
 	#SET{prix,#ARRAY}
 	<BOUCLE_commande_details(COMMANDES_DETAILS){id_commande}{par id_commandes_detail}>
 	#SET{prix,#GET{prix}|push{#PRIX*|mult{#QUANTITE}}}
+	#SET{objet,#OBJET}
+	#SET{id_objet,#ID_OBJET}
 	</BOUCLE_commande_details>
 	#SET{total,#GET{prix}|array_sum|prix_formater}
 	<p><:commandes:bonjour:> #NOM_BENEFICIAIRE</p>
@@ -30,10 +32,9 @@
 		<p><:cheques_cadeau:message_de:> #GET{nom_client}</p>
 		<p>(#MESSAGE)</p>
 	</div>]
-
 	[<div class="message-notification">
 		<p><:cheques_cadeau:message_de:> #NOM_SITE_SPIP</p>
-		(#MESSAGE_NOTIFICATION|propre)
+		(#INFO_MESSAGE_NOTIFICATION{#GET{objet},#GET{id_objet}}|propre)
 	</div>]
 
 	<div class="farewell">
