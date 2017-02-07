@@ -10,7 +10,7 @@
 
 	<title>[#NOM_SITE_SPIP] <:cheque_cadeau:cheque_numero:> #REFERENCE</title>
 
-	<BOUCLE_auteur(AUTEURS){id_auteur}{tout}>#SET{nom_client,#NOM}</BOUCLE_auteur><//B_contact>
+	<BOUCLE_auteur(AUTEURS){id_auteur}{tout}>#SET{nom_client,#NOM}</BOUCLE_auteur>
 
 	#SET{prix,#ARRAY}
 	<BOUCLE_commande_details(COMMANDES_DETAILS){id_commande}{par id_commandes_detail}>
