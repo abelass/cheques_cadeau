@@ -14,8 +14,6 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'champ_message_notification_explication' => 'Message ajouté à la notification envoyé au bénéficiaire.',
 	'champ_message_notification_label' => 'Message notification',
 
-	'champ_titre_label' => 'Titre',
-
 	// I
 	'icone_creer_cadeau_cheque' => 'Créer un chèque cadeau',
 	'icone_modifier_cadeau_cheque' => 'Modifier ce chèque cadeau',
