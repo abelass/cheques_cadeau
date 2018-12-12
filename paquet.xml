@@ -8,10 +8,6 @@
 	documentation=""
 	schema="1.0.1"
 >
-	<!--
-		Paquet genere le 2016-04-30 13:42:41
-		(Vous pouvez bien entendu supprimer ces commentaires)
-	-->
 
 	<nom>Chèque cadeau</nom>
 
