@@ -6,7 +6,7 @@
 	<form method='post' action='#ENV{action}'><div>
 		#ACTION_FORMULAIRE{#ENV{action}}
 		<input type='hidden' name='id_cadeau_cheque' value='#ENV{id_cadeau_cheque}' />
-		<ul>
+		<div>
 
 			[(#SAISIE{input, titre, obligatoire=oui,
 				label=<:cadeau_cheque:champ_titre_label:>})]
@@ -20,7 +20,7 @@
 				explication=<:cadeau_cheque:champ_message_notification_explication:>,
 				class=inserer_barre_edition,
 				})]
-		</ul>
+		</div>
 		[(#REM) ajouter les saisies supplementaires : extra et autre, a cet endroit ]
 		<!--extra-->
 		<p class="boutons"><input type='submit' class='submit' value='<:bouton_enregistrer:>' /></p>

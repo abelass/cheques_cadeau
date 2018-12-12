@@ -5,13 +5,13 @@
 	<form method='post' action='#ENV{action}'><div>
 		#ACTION_FORMULAIRE{#ENV{action}}
 		<h2><:cheques_cadeau:commander_cheque_cadeau:></h2>
-		<ul class="editer_groupe">
-			<li class="fieldset fieldset_fieldset_coordonnees">
+		<div class="editer_groupe">
+			<div class="fieldset fieldset_fieldset_coordonnees">
 				<fieldset>
 					<h3 class="legend">
 					<span><:cheques_cadeau:legende_coordonnees:></span>
 					</h3>
-					<ul class="editer_groupe">
+					<div class="editer_groupe">
 						[(#SESSION{id_auteur}|oui)
 							[(#SAISIE{input,nom,
 								disable=oui,
@@ -47,40 +47,40 @@
 								class=password
 							})]
 						]
-					</ul>
+					</div>
 				</fieldset>
-			</li>
-			<li class="fieldset fieldset_fieldset_informations_beneficiaire">
+			</div>
+			<div class="fieldset fieldset_fieldset_informations_beneficiaire">
 				<h3 class="legend">
 					<span><:cheques_cadeau:legende_informations_beneficiaire:></span>
 				</h3>
 				<fieldset>
-					<ul class="editer_groupe">
+					<div class="editer_groupe">
 						[(#SAISIE{input,nom_beneficiaire,
 							obligatoire=oui,
 							label=<:cheques_cadeau:label_nom_beneficiaire:>})]
 						[(#SAISIE{email,email_beneficiaire,
 							obligatoire=oui,
 							label=<:cheques_cadeau:label_email_beneficiaire:>})]
-					</ul>
+					</div>
 				</fieldset>
-			</li>
-			<li class="fieldset fieldset_fieldset_montant">
+			</div>
+			<div class="fieldset fieldset_fieldset_montant">
 				<fieldset>
 					<h3 class="legend">
 					<span><:cheques_cadeau:legende_informations_cadeau:></span>
 					</h3>
-					<ul class="editer_groupe">
+					<div class="editer_groupe">
 						[(#SAISIE{input,montant,
 							obligatoire=oui,
 							label=<:cheques_cadeau:label_montant{devise=#DEVISE}:>})]
 						[(#SAISIE{textarea,message,
 						label=<:cheques_cadeau:label_message:>,
 						explication=<:cheques_cadeau:explication_message:>})]
-					</ul>
+					</div>
 				</fieldset>
-			</li>
-		</ul>
+			</div>
+		</div>
 		[(#REM) ajouter les saisies supplementaires : extra et autre, a cet endroit ]
 		<!--extra-->
 		<p class="boutons"><input type='submit' class='submit' value='<:bouton_enregistrer:>' /></p>
