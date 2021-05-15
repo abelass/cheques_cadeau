@@ -3,7 +3,7 @@
  * Gestion du formulaire de d'édition de cadeau_cheque
  *
  * @plugin     Chèque cadeau
- * @copyright  2016
+ * @copyright  2016 - 2021
  * @author     rainer
  * @licence    GNU/GPL
  * @package    SPIP\Cheques_cadeau\Formulaires

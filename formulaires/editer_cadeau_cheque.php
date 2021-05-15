@@ -3,7 +3,7 @@
  * Gestion du formulaire de d'édition de cadeau_cheque
  *
  * @plugin     Chèque cadeau
- * @copyright  2016
+ * @copyright  2016 - 2021
  * @author     rainer
  * @licence    GNU/GPL
  * @package    SPIP\Cheques_cadeau\Formulaires
@@ -131,7 +131,7 @@ function formulaires_editer_cadeau_cheque_verifier_dist($id_cadeau_cheque='new',
  */
 function formulaires_editer_cadeau_cheque_traiter_dist($id_cadeau_cheque='new', $retour='', $associer_objet='', $lier_trad=0, $config_fonc='', $row=array(), $hidden=''){
 	$res = formulaires_editer_objet_traiter('cadeau_cheque',$id_cadeau_cheque,'',$lier_trad,$retour,$config_fonc,$row,$hidden);
- 
+
 	// Un lien a prendre en compte ?
 	if ($associer_objet AND $id_cadeau_cheque = $res['id_cadeau_cheque']) {
 		list($objet, $id_objet) = explode('|', $associer_objet);

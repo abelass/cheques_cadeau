@@ -3,7 +3,7 @@
  * Fonctions utiles au plugin Chèque cadeau
  *
  * @plugin     Chèque cadeau
- * @copyright  2016
+ * @copyright  2016 - 2021
  * @author     rainer
  * @licence    GNU/GPL
  * @package    SPIP\Cheques_cadeau\Fonctions
@@ -19,6 +19,6 @@ function cheques_cadeau_devise_defaut() {
 	else {
 		$devise_defaut = 'EUR';
 	}
-	
+
 	return $devise_defaut;
 }

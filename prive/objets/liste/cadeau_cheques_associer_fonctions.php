@@ -3,7 +3,7 @@
  * Fonctions du squelette associé
  *
  * @plugin     Chèque cadeau
- * @copyright  2016
+ * @copyright  2016 - 2021
  * @author     rainer
  * @licence    GNU/GPL
  * @package    SPIP\Cheques_cadeau\Fonctions

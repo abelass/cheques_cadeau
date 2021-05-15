@@ -3,7 +3,7 @@
  * Fichier gérant l'installation et désinstallation du plugin Chèque cadeau
  *
  * @plugin     Chèque cadeau
- * @copyright  2016
+ * @copyright  2016 - 2021
  * @author     rainer
  * @licence    GNU/GPL
  * @package    SPIP\Cheques_cadeau\Installation

@@ -3,7 +3,7 @@
  * Définit les autorisations du plugin Chèque cadeau
  *
  * @plugin     Chèque cadeau
- * @copyright  2016
+ * @copyright  2016 - 2021
  * @author     rainer
  * @licence    GNU/GPL
  * @package    SPIP\Cheques_cadeau\Autorisations
@@ -51,7 +51,7 @@ function autoriser_cheques_cadeau_configurer_dist($faire, $type, $id, $qui, $opt
 **/
 function autoriser_cadeaucheques_menu_dist($faire, $type, $id, $qui, $opt){
 	return true;
-} 
+}
 
 
 /**
@@ -66,7 +66,7 @@ function autoriser_cadeaucheques_menu_dist($faire, $type, $id, $qui, $opt){
 **/
 function autoriser_cadeauchequecreer_menu_dist($faire, $type, $id, $qui, $opt){
 	return autoriser('creer', 'cadeau_cheque', '', $qui, $opt);
-} 
+}
 
 /**
  * Autorisation de créer (cadeaucheque)
@@ -79,7 +79,7 @@ function autoriser_cadeauchequecreer_menu_dist($faire, $type, $id, $qui, $opt){
  * @return bool          true s'il a le droit, false sinon
 **/
 function autoriser_cadeaucheque_creer_dist($faire, $type, $id, $qui, $opt) {
-	return in_array($qui['statut'], array('0minirezo', '1comite')); 
+	return in_array($qui['statut'], array('0minirezo', '1comite'));
 }
 
 /**

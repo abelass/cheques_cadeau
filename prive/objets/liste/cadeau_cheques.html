@@ -1,6 +1,6 @@
 [(#SET{defaut_tri,#ARRAY{
-	titre,1, 
-	date,-1, 
+	titre,1,
+	date,-1,
 	id_cadeau_cheque,1,
 	points,-1
 }})]<B_liste_cadeau_cheques>
@@ -11,9 +11,9 @@
 	<thead>
 		<tr class='first_row'>
 			<th class='picto' scope='col'></th>
-			<th class='statut' scope='col'>[(#TRI{statut,<span title="<:lien_trier_statut|attribut_html:>">#</span>,ajax})]</th> 
+			<th class='statut' scope='col'>[(#TRI{statut,<span title="<:lien_trier_statut|attribut_html:>">#</span>,ajax})]</th>
 			<th class='titre' scope='col'>[(#TRI{titre,<:cadeau_cheque:champ_titre_label:>,ajax})]</th>
-			<th class='date' scope='col'>[(#TRI{date,<:date:>,ajax})]</th> 
+			<th class='date' scope='col'>[(#TRI{date,<:date:>,ajax})]</th>
 			<th class='id' scope='col'>[(#TRI{id_cadeau_cheque,<:info_numero_abbreviation:>,ajax})]</th>
 		</tr>
 	</thead>
@@ -21,9 +21,9 @@
 	<BOUCLE_liste_cadeau_cheques(CADEAU_CHEQUES){id_mot?}{id_auteur?}{where?}{statut?}{recherche?}{tri #ENV{par,num titre},#GET{defaut_tri}}{par titre}{pagination #ENV{nb,10}}>
 		<tr class='[(#COMPTEUR_BOUCLE|alterner{row_odd,row_even})]'>
 			<td class='picto'>[(#CHEMIN_IMAGE{cadeau_cheque-16.png}|balise_img)]</td>
-			<td class='statut'>[(#STATUT|puce_statut{cadeau_cheque,#ID_CADEAU_CHEQUE})]</td> 
+			<td class='statut'>[(#STATUT|puce_statut{cadeau_cheque,#ID_CADEAU_CHEQUE})]</td>
 			<td class='titre principale'>[(#LOGO_CADEAU_CHEQUE|image_reduire{20,26})]<a href="[(#ID_CADEAU_CHEQUE|generer_url_entite{cadeau_cheque})]" title="<:info_numero_abbreviation|attribut_html:> #ID_CADEAU_CHEQUE">[(#RANG). ]#TITRE</a></td>
-			<td class='date secondaire'>[(#DATE|affdate_jourcourt)]</td> 
+			<td class='date secondaire'>[(#DATE|affdate_jourcourt)]</td>
 			<td class='id'>[(#AUTORISER{modifier,cadeau_cheque,#ID_CADEAU_CHEQUE}|?{
 				<a href="[(#URL_ECRIRE{cadeau_cheque_edit,id_cadeau_cheque=#ID_CADEAU_CHEQUE})]">#ID_CADEAU_CHEQUE</a>,
 				#ID_CADEAU_CHEQUE
@@ -32,7 +32,7 @@
 	</BOUCLE_liste_cadeau_cheques>
 	</tbody>
 </table>
-[<p class='pagination'>(#PAGINATION{prive})</p>]
+[<nav class='pagination' role='navigation'>(#PAGINATION)</nav>]
 </div>
 </B_liste_cadeau_cheques>[
 <div class="liste-objets cadeau_cheques caption-wrap"><strong class="caption">(#ENV*{sinon,''})</strong></div>

@@ -3,7 +3,7 @@
  * Fonction du plugin  Chèque cadeau
  *
  * @plugin    Chèque cadeau
- * @copyright  2016
+ * @copyright  2016 - 2021
  * @author     Rainer Müller
  * @licence    GNU/GPL
  * @package    SPIP\Cheques_cadea\Action
@@ -41,9 +41,9 @@ function cheques_remplir_commande($id_commande, $id_cadeau_cheque, $options = ar
 		'id_objet' => $id_cadeau_cheque,
 		'descriptif' => generer_info_entite($id_cadeau_cheque, 'cadeau_cheque', 'titre'),
 		'quantite' => 1,
-		'prix_unitaire_ht' => _request('montant') ? _request('montant') : 
+		'prix_unitaire_ht' => _request('montant') ? _request('montant') :
 			(isset($options['montant']) ? $options['montant'] : 0),
-		'taxe' => _request('taxe') ? _request('taxe') : 
+		'taxe' => _request('taxe') ? _request('taxe') :
 			(isset($options['taxe']) ? $options['taxe'] : 0),
 		'statut' => 'attente'
 	);
@@ -62,7 +62,7 @@ function cheques_remplir_commande($id_commande, $id_cadeau_cheque, $options = ar
 		objet_modifier('commandes_detail', $id_commandes_detail, $set);
 		$details[] = $id_commandes_detail;
 	}
-	
+
 	if (!$append){
 		// supprimer les details qui n'ont rien a voir avec ce panier
 		sql_delete("spip_commandes_details","id_commande=".intval($id_commande)." AND ".sql_in('id_commandes_detail',$details,"NOT"));

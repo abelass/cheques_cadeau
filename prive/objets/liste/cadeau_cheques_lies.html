@@ -1,6 +1,6 @@
 [(#SET{defaut_tri,#ARRAY{
 	multi titre,1,
-	date,-1, 
+	date,-1,
 	id_cadeau_cheque,1
 }})
 ]
@@ -32,7 +32,7 @@ a mis a jour la valeur avec la page reelle]
 		[<tr><td colspan="4"><p class='pagination'>(#GET{p})</p></td></tr>]
 
 		<tr class='first_row'>
-			<th class='statut' scope='col'>[(#TRI{statut,<span title="<:lien_trier_statut|attribut_html:>">#</span>,ajax})]</th> 
+			<th class='statut' scope='col'>[(#TRI{statut,<span title="<:lien_trier_statut|attribut_html:>">#</span>,ajax})]</th>
 			<th class='titre' scope='col'>[(#TRI{multi titre,<:cadeau_cheque:champ_titre_label:>,ajax})]</th>
 			<th class='action' scope='col'></th>
 		</tr>
@@ -41,7 +41,7 @@ a mis a jour la valeur avec la page reelle]
 	<BOUCLE_liste_cadeau_cheques(CADEAU_CHEQUES){id_cadeau_cheque IN #GET{selection}}{statut?}
 		{tri #ENV{par,multi titre},#GET{defaut_tri}}{pagination #ENV{nb,10} cadl}>
 		<tr class="[(#COMPTEUR_BOUCLE|alterner{row_odd,row_even})][ (#EXPOSE|unique)][ (#TITRE**|extraire_multi|initiale|=={#ENV{i}}|?{on}|unique)][(#ID_CADEAU_CHEQUE|=={#ENV{id_lien_ajoute}}|oui)append]">
-			<td class='statut'>[(#STATUT|puce_statut{cadeau_cheque})]</td> 
+			<td class='statut'>[(#STATUT|puce_statut{cadeau_cheque})]</td>
 			<td class='titre'>[(#LOGO_CADEAU_CHEQUE|image_reduire{20,20})]<a href="[(#ID_CADEAU_CHEQUE|generer_url_entite{cadeau_cheque})]">#TITRE</a></td>
 
 			<td class='action'>
@@ -53,7 +53,7 @@ a mis a jour la valeur avec la page reelle]
 	</BOUCLE_liste_cadeau_cheques>
 	</tbody>
 </table>
-[<p class='pagination'>(#PAGINATION{prive})</p>]
+[<nav class='pagination' role='navigation'>(#PAGINATION)</nav>]
 [(#GRAND_TOTAL|>{3}|oui)<div class="action"><button class="button link" name="supprimer_lien\[cadeau_cheque-*-#OBJET-#ID_OBJET\]" value="X"><:cadeau_cheque:retirer_tous_liens_cadeau_cheques:> [(#CHEMIN_IMAGE{supprimer-8.png}|balise_img{'X'})]</button></div>]
 </div>
 </B_liste_cadeau_cheques>

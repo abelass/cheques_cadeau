@@ -3,7 +3,7 @@
  * Options du plugin Chèque cadeauau chargement
  *
  * @plugin     Chèque cadeau
- * @copyright  2016
+ * @copyright  2016 - 2021
  * @author     rainer
  * @licence    GNU/GPL
  * @package    SPIP\Cheques_cadeau\Options
@@ -18,7 +18,7 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  *
  * Il vaut donc mieux limiter au maximum son usage
  * tout comme son volume !
- * 
+ *
  */
 
 ?>
